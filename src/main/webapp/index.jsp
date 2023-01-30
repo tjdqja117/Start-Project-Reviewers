@@ -29,13 +29,18 @@
   <link href="<c:url value="/resources/assets/vendor/quill/quill.snow.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/quill/quill.bubble.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/remixicon/remixicon.css"/>" rel="stylesheet">
-  <link href="<c:url value="/resources/assets/vendor/simple-datatables/style.css"/>" rel="stylesheet">
+ 
   
   <!-- Template Main CSS File -->
   <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
   <!-- JS LINK -->
- <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-      <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+ 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+ 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	
+     <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
     <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
@@ -54,10 +59,11 @@
   ======================================================== -->
   <style type="text/css">
      .item img{
-      display: inline-block;
-    width: 250px;
-    margin-left: 2%;
+    display: inline-block;
+    width: 100%;
+    height:100%;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    border-radius: 0px;
      }
      
      .item {
@@ -66,7 +72,7 @@
     margin-top: 40px;
     margin-left: 2%;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-    boder-radius:25px;
+
 }
      
      .item .image {
@@ -111,7 +117,7 @@
      
      img {
         width: 100%;
-        height: 100%;
+/*         height: 100%; */
         border-radius: 25px;
        
       }
@@ -155,7 +161,7 @@
         $( '.slider' ).slick( {
           autoplay: true,
           autoplaySpeed: 5000,
-          slidesToShow: 5,
+          slidesToShow: 6,
           slidesToScroll: 3,
         } );
       } );
@@ -164,37 +170,40 @@
     </script>
 
 
+
+
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+  <header id="header" class="header fixed-top d-flex align-items-center" style="z-index:-1;">
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="testMovie.do?type=movie" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block">#Reviewers</span>
+        <span class="d-none d-lg-block">#Reviewersa</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
 	<div>
-	
+	<!-- 검색 -->
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" action="search.do" id="searchHeader">
-        <input type="search" id="searchKeyword" name="searchKeyword">
+        <input type="search" id="autocompleteText" name="searchKeyword" aria-label="Search">
         <button type="submit" value="search"><i class="bi bi-search"></i></button>
-      
+     
       <select id="SC" name="SC">
-		<option value="movie">영화</option>
+		<option value="movie" selected>영화</option>
 		<option value="tv">TV</option>
 		<option value="review">리뷰</option>
 		<option value="tag">태그</option>
 		<option value="SearchId">아이디검색</option>
 	</select>
       </form>
-	
+
     </div>
     </div>
-    <!-- End Search Bar -->
+     <!-- 검색 끝 --> 
+
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -211,7 +220,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="#" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">리트리버</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -311,8 +320,8 @@
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>업데이트 예정</span>
+            <a href="testMovie.do?type=tv">
+              <i class="bi bi-circle"></i><span>인기 TV 프로그램</span>
             </a>
           </li>
           <li>
@@ -379,8 +388,15 @@
    <main id="main" class="main">
 
     <!-- 인기영화 슬라이드 코드 -->
+  <c:choose>
+  	<c:when test="${type eq 'movie'}">  
+	  	<h2 style="margin-left:270px; margin-top: 100px;">인기 영화</h2>
+  	</c:when>
+  	<c:otherwise>
+	  	<h2 style="margin-left:270px; margin-top: 100px;">인기 TV 프로그램</h2>
+  	</c:otherwise>
+  </c:choose>
   <div>
-  <h2 style="margin-left:270px; margin-top: 100px;">인기 영화</h2>
     <div class="slider">
      <c:forEach var="release_date" begin="0" end="19" step="1" items="${release_date}">
       <div><img src="${release_date.poster_path }" onClick="location.href='ContentsDetail.do?type=${release_date.contents_type }&id=${release_date.contents_num }'">
@@ -395,6 +411,7 @@
     <div>
 
     	<h2 style="margin-left:270px; ">인기 리뷰</h2>
+    	
     	<div class="slider">
     	<c:forEach var="board" items="${boardList }">
     			<li class="item item1">
@@ -405,190 +422,31 @@
                         <p>작성자:${board.nickname }</p>
                         <p>추천:${board.like_num} &nbsp&nbsp 비추:	 ${board.unlike_num}</p>
                         <a href="#">바로가기</a>
-                    </div>
+       </div>
          
  				</c:forEach>
     	</div>
     </div>
+  
     
     
    <!-- 인기영화 슬라이드 끝 -->
 
-                  <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                      new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
-                          name: 'Sales',
-                          data: [31, 40, 28, 51, 42, 82, 56],
-                        }, {
-                          name: 'Revenue',
-                          data: [11, 32, 45, 32, 34, 52, 41]
-                        }, {
-                          name: 'Customers',
-                          data: [15, 11, 32, 18, 9, 24, 11]
-                        }],
-                        chart: {
-                          height: 350,
-                          type: 'area',
-                          toolbar: {
-                            show: false
-                          },
-                        },
-                        markers: {
-                          size: 4
-                        },
-                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.3,
-                            opacityTo: 0.4,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: {
-                          enabled: false
-                        },
-                        stroke: {
-                          curve: 'smooth',
-                          width: 2
-                        },
-                        xaxis: {
-                          type: 'datetime',
-                          categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-                        },
-                        tooltip: {
-                          x: {
-                            format: 'dd/MM/yy HH:mm'
-                          },
-                        }
-                      }).render();
-                    });
-                  </script>
-                  <!-- End Line Chart -->
+                 
 
-                </div>
 
-              </div>
-            </div><!-- End Reports -->
-
-            
 
             
 
           
 
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  var budgetChart = echarts.init(document.querySelector("#budgetChart")).setOption({
-                    legend: {
-                      data: ['Allocated Budget', 'Actual Spending']
-                    },
-                    radar: {
-                      // shape: 'circle',
-                      indicator: [{
-                          name: 'Sales',
-                          max: 6500
-                        },
-                        {
-                          name: 'Administration',
-                          max: 16000
-                        },
-                        {
-                          name: 'Information Technology',
-                          max: 30000
-                        },
-                        {
-                          name: 'Customer Support',
-                          max: 38000
-                        },
-                        {
-                          name: 'Development',
-                          max: 52000
-                        },
-                        {
-                          name: 'Marketing',
-                          max: 25000
-                        }
-                      ]
-                    },
-                    series: [{
-                      name: 'Budget vs spending',
-                      type: 'radar',
-                      data: [{
-                          value: [4200, 3000, 20000, 35000, 50000, 18000],
-                          name: 'Allocated Budget'
-                        },
-                        {
-                          value: [5000, 14000, 28000, 26000, 42000, 21000],
-                          name: 'Actual Spending'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
+             
 
-            
+   
 
           
 
-              <script>
-                document.addEventListener("DOMContentLoaded", () => {
-                  echarts.init(document.querySelector("#trafficChart")).setOption({
-                    tooltip: {
-                      trigger: 'item'
-                    },
-                    legend: {
-                      top: '5%',
-                      left: 'center'
-                    },
-                    series: [{
-                      name: 'Access From',
-                      type: 'pie',
-                      radius: ['40%', '70%'],
-                      avoidLabelOverlap: false,
-                      label: {
-                        show: false,
-                        position: 'center'
-                      },
-                      emphasis: {
-                        label: {
-                          show: true,
-                          fontSize: '18',
-                          fontWeight: 'bold'
-                        }
-                      },
-                      labelLine: {
-                        show: false
-                      },
-                      data: [{
-                          value: 1048,
-                          name: 'Search Engine'
-                        },
-                        {
-                          value: 735,
-                          name: 'Direct'
-                        },
-                        {
-                          value: 580,
-                          name: 'Email'
-                        },
-                        {
-                          value: 484,
-                          name: 'Union Ads'
-                        },
-                        {
-                          value: 300,
-                          name: 'Video Ads'
-                        }
-                      ]
-                    }]
-                  });
-                });
-              </script>
-
+             
             
 
          
@@ -632,16 +490,16 @@
   <!-- Vendor JS Files -->
   <!-- <script src="<c:url value="/resources/assets/vendor/apexcharts/apexcharts.min.js"/>"></script> -->
   <script src="<c:url value="/resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-  <script src="<c:url value="/resources/assets/vendor/chart.js/chart.umd.js"/>"></script>
+
   
   <!-- <script src="<c:url value="/resources/assets/vendor/echarts/echarts.min.js"/>"></script> -->
   
   <script src="<c:url value="/resources/assets/vendor/quill/quill.min.js"/>"></script>
-  <script src="<c:url value="/resources/assets/vendor/simple-datatables/simple-datatables.js"/>"></script>
-  <script src="<c:url value="/resources/assets/vendor/tinymce/tinymce.min.js"/>"></script>
-  <script src="<c:url value="/resources/assets/vendor/php-email-form/validate.js"/>"></script>
+
+    <script src="<c:url value="/resources/assets/vendor/php-email-form/validate.js"/>"></script>
   
    <script src="<c:url value="/resources/assets/js/main.js"/>"></script>
+   <script src="<c:url value="/resources/assets/js/autoComplete.js"/>"></script>
 
 
 

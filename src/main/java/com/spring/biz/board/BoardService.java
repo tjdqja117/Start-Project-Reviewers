@@ -36,4 +36,6 @@ public interface BoardService {
 	// 리뷰 검색 
 	List<MovieBoardVO> getSearchReview(MovieBoardVO vo);
 	
+	
+	
 }

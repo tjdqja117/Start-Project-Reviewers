@@ -283,8 +283,8 @@ select{
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="forms-elements.html">
-              <i class="bi bi-circle"></i><span>업데이트 예정</span>
+             <a href="testMovie.do?type=tv">
+              <i class="bi bi-circle"></i><span>인기 TV 프로그램</span>
             </a>
           </li>
           <li>

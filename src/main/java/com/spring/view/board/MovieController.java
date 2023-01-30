@@ -1,16 +1,28 @@
 package com.spring.view.board;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.spring.biz.board.BoardService;
 import com.spring.biz.board.MovieBoardVO;
 import com.spring.biz.board.PageDTO;
@@ -71,7 +83,7 @@ public class MovieController {
 
 		
 		model.addAttribute("release_date", release_date); // 최신 공개 순
-		
+		model.addAttribute("type", contents_type);
 		
 		
 		
@@ -118,4 +130,66 @@ public class MovieController {
 	    }
 	      return "searchTest.jsp";
 	   }
+	
+	
+	
+	
+	
+	public JSONArray autoSearch(String searchCondition,String searchKeyword) throws IOException {
+		
+		int size=0;
+		 
+	    JSONArray arrayObj = new JSONArray();
+	    JSONObject jsonObj = null; 
+	    ArrayList<String> resultlist = new ArrayList<String>(); 
+	 
+	    // JPA 기능 사용, 포함 단어 검색 메서드인 findByMovieTitleContains();를 이용해도 괜찮음
+		getSearchUtil search = new getSearchUtil();
+        List<SearchVO> result = search.getInfoList(searchCondition ,searchKeyword);
+        Collections.sort(result, new SortByVote());
+        
+	
+        if(result.size()>=10) {
+        	size = 10;
+        	
+        }else {
+        	size=result.size();
+        }
+        
+	    for(int i=0;i<size;i++) { 
+	        String str = result.get(i).getTitle();
+	        resultlist.add(str); 
+	    } 
+	    //뽑은 후 json파싱 
+	    for(String str : resultlist) {
+	        jsonObj = new JSONObject();
+	        jsonObj.put("data", str);
+	        arrayObj.add(jsonObj); 
+	        
+	    } 
+	    System.out.println(arrayObj);
+	    return arrayObj;
+	 
+	}
+	
+	
+		@ResponseBody
+		@RequestMapping(value = "autoSearch.do", method= {RequestMethod.GET},	produces = "application/json; charset=utf8")
+		public void autoSearch(Model model,HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "SC")String searchCondition,String searchKeyword) throws IOException {
+		                   
+		String searchValue = request.getParameter("searchKeyword"); 
+		String searchCondtion = request.getParameter("SC");
+		JSONArray arrayObj = MovieController.this.autoSearch(searchCondtion, searchValue);	
+		System.out.println(arrayObj);
+		response.setCharacterEncoding("UTF-8");
+		PrintWriter pw = response.getWriter(); 
+		pw.print(arrayObj); 
+		pw.flush(); 
+		pw.close();
+}
+	
+
+		
+		
+		
 }
