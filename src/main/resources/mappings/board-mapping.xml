@@ -11,6 +11,7 @@
 		<result property="nickname" column="NICKNAME"/>
 		<result property="content" column="CONTENT"/>
 		<result property="filename" column="FILENAME"/>
+		<result property="writedate" column="WRITEDATE"/>
 		<result property="like_num" column="LIKE_NUM"/>
 		<result property="unlike_num" column="UNLIKE_NUM"/>
 		<result property="cnt" column="CNT"/>
@@ -19,9 +20,31 @@
 	</resultMap>
 
 	<insert id="insertBoard">
-		INSERT INTO REVIEWBOARD(BSEQ,BOARDNUM,TITLE,NICKNAME,CONTENT,FILENAME,LIKE_NUM,UNLIKE_NUM,CNT,USERID) 
-		VALUES ((select nvl(max(bseq), 0) + 1 from reviewboard), #{boardnum}, #{title},#{nickname}, #{content}, #{filename}
-		, #{like_num}, #{unlike_num}, #{cnt}, #{userId})
+		
+		INSERT INTO REVIEWBOARD(
+		BSEQ,
+		BOARDNUM,
+		TITLE,
+		NICKNAME,
+		CONTENT,
+		FILENAME,
+		LIKE_NUM,
+		UNLIKE_NUM,
+		CNT,
+		USERID
+		) 
+		VALUES (
+		(select nvl(max(bseq), 0) + 1 from reviewboard),
+		 #{boardnum}, 
+		 #{title},
+		 #{nickname}, 
+		 #{content}, 
+		 null, 
+		 0, 
+		 0, 
+		 0, 
+		 #{userId})
+		
 	</insert>
 	
 	<update id="updateBoard">
@@ -51,7 +74,7 @@
 	<select id="getBoardList" resultMap="boardResult">
 		SELECT * 
 		FROM(
-			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,FILENAME,WRITEDATE, LIKE_NUM, UNLIKE_NUM, CNT, USERID 
+			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,WRITEDATE, FILENAME, LIKE_NUM, UNLIKE_NUM, CNT, USERID 
 			FROM(
 				SELECT * 
 				FROM REVIEWBOARD 

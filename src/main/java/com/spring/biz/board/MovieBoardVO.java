@@ -1,10 +1,12 @@
 package com.spring.biz.board;
 
+import java.sql.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import oracle.sql.DATE;
+
 
 public class MovieBoardVO {
 
@@ -14,7 +16,7 @@ public class MovieBoardVO {
 	private String nickname;
 	private String content;
 	private String filename;
-	private DATE writedate;
+	private Date writedate;
 	private int like_num;
 	private int unlike_num;
 	private int cnt;
@@ -122,14 +124,19 @@ public class MovieBoardVO {
 
 
 
-	public DATE getWritedate() {
+
+
+
+
+
+	public Date getWritedate() {
 		return writedate;
 	}
 
 
 
 
-	public void setWritedate(DATE writedate) {
+	public void setWritedate(Date writedate) {
 		this.writedate = writedate;
 	}
 

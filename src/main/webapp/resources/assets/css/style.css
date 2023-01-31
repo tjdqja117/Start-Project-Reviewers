@@ -397,12 +397,11 @@ h6 {
 
 .header {
   transition: all 0.5s;
-  z-index: -1!important;
   height: 60px;
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
   background-color: rgb(251, 247, 242);
   padding-left: 20px;
-  /* Toggle Sidebar Button */
+  /* Toggle Sidebar Button */ 
   /* Search Bar */
 }
 

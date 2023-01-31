@@ -42,7 +42,6 @@ public class MovieController {
 	private BoardService boardService;
 	
 	
-	
 	public class SortByDate implements Comparator<ContentsVO> {
 		@Override
 		public int compare(ContentsVO o1, ContentsVO o2) {
@@ -135,20 +134,21 @@ public class MovieController {
 	
 	
 	
-	public JSONArray autoSearch(String searchCondition,String searchKeyword) throws IOException {
+	public JSONArray autoSearch(String searchCondition,String searchKeyword, MovieBoardVO vo) throws IOException {
 		
 		int size=0;
 		 
 	    JSONArray arrayObj = new JSONArray();
 	    JSONObject jsonObj = null; 
-	    ArrayList<String> resultlist = new ArrayList<String>(); 
+	    ArrayList<String> resultlist = new ArrayList<String>();
+	    System.out.println(searchCondition);
+	    System.out.println(searchKeyword);
 	 
-	    // JPA 기능 사용, 포함 단어 검색 메서드인 findByMovieTitleContains();를 이용해도 괜찮음
+	    
+	    if(searchCondition.equals("movie") || searchCondition.equals("tv")) {
 		getSearchUtil search = new getSearchUtil();
         List<SearchVO> result = search.getInfoList(searchCondition ,searchKeyword);
         Collections.sort(result, new SortByVote());
-        
-	
         if(result.size()>=10) {
         	size = 10;
         	
@@ -167,6 +167,35 @@ public class MovieController {
 	        arrayObj.add(jsonObj); 
 	        
 	    } 
+        
+	    }else {
+    	List<MovieBoardVO> result =	boardService.getSearchReview(vo);	
+    	Collections.sort(result, new SortByLike());
+    	
+        if(result.size()>=10) {
+        	size = 10;
+        	
+        }else {
+        	size=result.size();
+        }
+        
+	    for(int i=0;i<size;i++) { 
+	        String str = result.get(i).getTitle();
+	        resultlist.add(str); 
+	    } 
+	    //뽑은 후 json파싱 
+	    for(String str : resultlist) {
+	        jsonObj = new JSONObject();
+	        jsonObj.put("data", str);
+	        arrayObj.add(jsonObj); 
+	        
+	    } 
+	    }
+    
+        
+     
+	
+
 	    System.out.println(arrayObj);
 	    return arrayObj;
 	 
@@ -175,11 +204,11 @@ public class MovieController {
 	
 		@ResponseBody
 		@RequestMapping(value = "autoSearch.do", method= {RequestMethod.GET},	produces = "application/json; charset=utf8")
-		public void autoSearch(Model model,HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "SC")String searchCondition,String searchKeyword) throws IOException {
+		public void autoSearch(Model model,HttpServletRequest request, HttpServletResponse response, @RequestParam(value = "SC")String searchCondition,String searchKeyword, MovieBoardVO vo) throws IOException {
 		                   
 		String searchValue = request.getParameter("searchKeyword"); 
 		String searchCondtion = request.getParameter("SC");
-		JSONArray arrayObj = MovieController.this.autoSearch(searchCondtion, searchValue);	
+		JSONArray arrayObj = MovieController.this.autoSearch(searchCondtion, searchValue, vo);	
 		System.out.println(arrayObj);
 		response.setCharacterEncoding("UTF-8");
 		PrintWriter pw = response.getWriter(); 

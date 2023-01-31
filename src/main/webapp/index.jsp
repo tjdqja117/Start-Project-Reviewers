@@ -74,6 +74,11 @@
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 
 }
+
+.ui-autocomplete {
+	position:fixed;
+    z-index:9050!important;
+}
      
      .item .image {
     width: 100%;
@@ -175,7 +180,7 @@
 <body>
 
   <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center" style="z-index:-1;">
+  <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="testMovie.do?type=movie" class="logo d-flex align-items-center">
@@ -325,8 +330,8 @@
             </a>
           </li>
           <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>업데이트 예정</span>
+            <a href="getBoardList.do?boardnum=4">
+              <i class="bi bi-circle"></i><span>자유 게시판</span>
             </a>
           </li>
           <li>

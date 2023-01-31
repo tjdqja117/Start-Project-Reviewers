@@ -37,18 +37,17 @@ public class BoardController {
 	@RequestMapping(value="insertBoard.do")
 	public String insertBoard(MovieBoardVO vo) throws IOException {
 
-		System.out.println("글 등록 처리");
 //		logger.debug("[LOG] 글 등록 처리");
 		
-		// 파일 업로드 처리
-				MultipartFile uploadFile = vo.getUploadFile();
-				if (!uploadFile.isEmpty()) {
-					String filename = uploadFile.getOriginalFilename();
-					uploadFile.transferTo(new File("C:/" + filename));
-				}
-		
+//		// 파일 업로드 처리
+//				MultipartFile uploadFile = vo.getUploadFile();
+//				if (!uploadFile.isEmpty()) {
+//					String filename = uploadFile.getOriginalFilename();
+//					uploadFile.transferTo(new File("C:/" + filename));
+//				}
 		boardService.insertBoard(vo);
-		
+		System.out.println("글 등록 처리");
+		System.out.println(vo+"임");
 		return "getBoardList.do";
 	}
 
@@ -132,7 +131,12 @@ public class BoardController {
 				model.addAttribute("pageMaker", pageMaker);	// Model 정보 저장
 				model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
 				model.addAttribute("boardnum", vo.getBoardnum());
-				return "movieReview.jsp";
+				if(num == 4) {
+					return "community.jsp";
+				}else {
+					return "movieReview.jsp";
+					}
+				
 			}
 				
 	

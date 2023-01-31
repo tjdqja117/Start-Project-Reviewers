@@ -34,8 +34,5 @@ public interface BoardService {
 	List<MovieBoardVO> getBoardListWithDynamicPaging(SearchCriteria cri);
 	
 	// 리뷰 검색 
-	List<MovieBoardVO> getSearchReview(MovieBoardVO vo);
-	
-	
-	
+	List<MovieBoardVO> getSearchReview(MovieBoardVO vo);	
 }
