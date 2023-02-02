@@ -26,6 +26,8 @@
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSession"></constructor-arg>
 	</bean>
+	
+	
 <!--  	
 	<bean id="afterReturning" class="com.spring.biz.common.AfterReturningAdvice"></bean>
 	

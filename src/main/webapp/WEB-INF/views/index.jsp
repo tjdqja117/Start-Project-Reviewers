@@ -29,7 +29,7 @@
   <link href="<c:url value="/resources/assets/vendor/quill/quill.snow.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/quill/quill.bubble.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/remixicon/remixicon.css"/>" rel="stylesheet">
- 
+  
   
   <!-- Template Main CSS File -->
   <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
@@ -40,15 +40,14 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	
-     <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  rel="stylesheet"/>
-        <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://kit.fontawesome.com/8e012a278c.js"></script>
-<script type="text/javascript" src="<c:url value="/resources/main.js"/>"></script>
+	<script src="https://kit.fontawesome.com/8e012a278c.js"></script>
+	<script type="text/javascript" src="<c:url value="/resources/main.js"/>"></script>
 
 
   <!-- =======================================================
@@ -72,9 +71,7 @@
     margin-top: 40px;
     margin-left: 2%;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-
 }
-
 .ui-autocomplete {
 	position:fixed;
     z-index:9050!important;
@@ -89,23 +86,19 @@
     background-size: cover;
     
 }
-
 .item .cont {
     padding: 20px;
 }
-
 .item strong {
     display: block;
     margin: 0 0 10px 0;
     font-size: 16px;
     letter-spacing: -1px;
 }
-
 .item p {
     font-size: 13px;
     letter-spacing: -1px;
 }
-
  .item a {
     display: inline-block;
     margin-top: 10px;
@@ -114,7 +107,6 @@
     font-size: 13px;
     letter-spacing: -1px;
 }
-
 .item a:hover {
     background: #325cb2;
     color: #fff;
@@ -140,7 +132,6 @@
       }
       select{
      	margin-left:20px;
-
  		font-family: "Noto Sansf KR", sans-serif;
 		font-size: 1rem;
 		font-weight: 400;
@@ -153,7 +144,6 @@
 		
 		border: 1px solid #aaa;
 		border-radius: 0.5em;
-
       }
    </style>
   
@@ -179,12 +169,12 @@
 
 <body>
 
-  <!-- ======= Header ======= -->
+   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="testMovie.do?type=movie" class="logo d-flex align-items-center">
-        <span class="d-none d-lg-block">#Reviewersa</span>
+        <span class="d-none d-lg-block">#Reviewers</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
