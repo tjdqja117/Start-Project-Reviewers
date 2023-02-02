@@ -15,6 +15,12 @@
   <link href="https://fonts.gstatic.com" rel="preconnect">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
+	   <!-- BootStrap -->
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+	
   <!-- Vendor CSS Files -->
   
   <link href="<c:url value="/resources/assets/vendor/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
@@ -23,22 +29,26 @@
   <link href="<c:url value="/resources/assets/vendor/quill/quill.snow.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/quill/quill.bubble.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/remixicon/remixicon.css"/>" rel="stylesheet">
- 
+    <link href="<c:url value="/resources/css/sujin.css" />" rel="stylesheet"> 
   
-  <!-- JS LINK -->
- <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
-      <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  rel="stylesheet"/>
-        <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<script src="https://kit.fontawesome.com/8e012a278c.js"></script>
-<script type="text/javascript" src="<c:url value="/resources/main.js"/>"></script>
-
   <!-- Template Main CSS File -->
   <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
+  <!-- JS LINK -->
+ 	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+ 	<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" >
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	
+    <script src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://kit.fontawesome.com/8e012a278c.js"></script>
+	<script type="text/javascript" src="<c:url value="/resources/main.js"/>"></script>
+
 <title>검색 결과</title>
 </head>
 <style>
@@ -138,7 +148,7 @@ select{
 
 <body>
 
-  <!-- ======= Header ======= -->
+ <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -149,24 +159,25 @@ select{
     </div><!-- End Logo -->
 
 	<div>
-	
+	<!-- 검색 -->
     <div class="search-bar">
       <form class="search-form d-flex align-items-center" action="search.do" id="searchHeader">
-        <input type="search" id="searchKeyword" name="searchKeyword">
+        <input type="search" id="autocompleteText" name="searchKeyword" aria-label="Search">
         <button type="submit" value="search"><i class="bi bi-search"></i></button>
-      
+     
       <select id="SC" name="SC">
-		<option value="movie">영화</option>
+		<option value="movie" selected>영화</option>
 		<option value="tv">TV</option>
 		<option value="review">리뷰</option>
 		<option value="tag">태그</option>
 		<option value="SearchId">아이디검색</option>
 	</select>
       </form>
-	
+
     </div>
     </div>
-    <!-- End Search Bar -->
+     <!-- 검색 끝 --> 
+
 
     <nav class="header-nav ms-auto">
       <ul class="d-flex align-items-center">
@@ -181,16 +192,23 @@ select{
 
 
         <li class="nav-item dropdown pe-3">
-
+		      <c:choose>
+            <c:when test="${User.userId  eq null }">
+               <!-- Button trigger modal -->
+               <button type="button" class="btn" data-toggle="modal"
+                  data-target="#exampleModalCenter">로그인</button>
+                        <button type="button" onclick="location.href='sign_up.do'">회원가입</button>
+            </c:when>
+            <c:otherwise>
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">리트리버</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">${UserInfo.nickname }</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>리트리버</h6>
-              <span>강아지</span>
+              <h6>${User.userId }</h6>
+              <span>${UserInfo.nickname }</span>
             </li>
             <li>
               <hr class="dropdown-divider">
@@ -227,7 +245,7 @@ select{
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="#">
+              <a class="dropdown-item d-flex align-items-center" href="logout.do">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>로그 아웃</span>
               </a>
@@ -235,6 +253,9 @@ select{
 
           </ul><!-- End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
+     </c:otherwise>
+         </c:choose>
+
 
       </ul>
     </nav><!-- End Icons Navigation -->
@@ -247,15 +268,33 @@ select{
     <ul class="sidebar-nav" id="sidebar-nav">
 
       <li class="nav-item">
-        <a class="nav-link " href="testMovie.do?type=movie">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="testMovie.do?type=movie">
           <i class="bi bi-grid"></i>
-          <span>메인 페이지</span>
+          <span>메인 페이지</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="testMovie.do?type=movie">
+              <i class="bi bi-circle"></i><span>인기 영화</span>
+            </a>
+          </li>
+          <li>
+            <a href="testMovie.do?type=tv">
+              <i class="bi bi-circle"></i><span>인기 TV프로그램</span>
+            </a>
+          </li>
+          <li>
+            <a href="testMovie.do?type=webtoon">
+              <i class="bi bi-circle"></i><span>인기 웹툰</span>
+            </a>
+          </li>
+        </ul>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-menu-button-wide"></i><span>컨텐츠 리뷰</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-menu-button-wide"></i>
+          <span>컨텐츠 리뷰</span> <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
@@ -283,57 +322,33 @@ select{
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-             <a href="testMovie.do?type=tv">
-              <i class="bi bi-circle"></i><span>인기 TV 프로그램</span>
+            <a href="getBoardList.do?boardnum=4">
+              <i class="bi bi-circle"></i><span>자유 게시판</span>
             </a>
           </li>
-          <li>
-            <a href="forms-layouts.html">
-              <i class="bi bi-circle"></i><span>업데이트 예정</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-editors.html">
-              <i class="bi bi-circle"></i><span>업데이트 예정</span>
-            </a>
-          </li>
-          <li>
-            <a href="forms-validation.html">
-              <i class="bi bi-circle"></i><span>업데이트 예정</span>
-            </a>
-          </li>
+          
         </ul>
       </li><!-- End Forms Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>인기 리뷰</span><i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="tables-general.html">
-              <i class="bi bi-circle"></i><span>인기 리뷰</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Tables Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" href="mypage.do">
           <i class="bi bi-person"></i>
           <span>마이페이지</span>
         </a>
       </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-faq.html">
+        <a class="nav-link collapsed" href="cs.do">
           <i class="bi bi-question-circle"></i>
-          <span>F.A.Q</span>
+          <span>고객센터</span>
         </a>
       </li><!-- End F.A.Q Page Nav -->
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="pages-login.html">
+
+<li class="nav-item">
+      <a class="nav-link collapsed" href="login.do" data-toggle="modal"
+                  data-target="#exampleModalCenter">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>로그인</span>
         </a>
