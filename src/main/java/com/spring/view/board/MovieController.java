@@ -69,7 +69,7 @@ public class MovieController {
 		}
 	}
 	
-	@RequestMapping(value="testMovie.do")
+	@RequestMapping({"/", "testMovie.do"})
 	public String main(@RequestParam(value = "type", defaultValue = "movie") String contents_type, Model model, SearchCriteria cri) {
 
 		// 영화 정보를 불러오는 클래스 (이전 글에서 설명한 데이터 파싱 전용 클래스)
@@ -100,7 +100,7 @@ public class MovieController {
 		model.addAttribute("boardList", boardService.getBoardListMain(cri));	// Model 정보 저장
 //		model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
 		
-		return "index.jsp";
+		return "index";
 	}
 	
 	@RequestMapping(value = "ContentsDetail.do")
@@ -108,7 +108,7 @@ public class MovieController {
 		getContentInfo info = new getContentInfo();
 		
 		mode.addAttribute("info",info.getjsonObjectInfo(contents_type, contents_num));
-		return "testDetail.jsp";
+		return "testDetail";
 	}
 	
 	@RequestMapping(value = "search.do")
@@ -118,7 +118,7 @@ public class MovieController {
 	    	List<MovieBoardVO> result = boardService.getSearchReview(vo);
 	    	Collections.sort(result, new SortByLike());
 	    	model.addAttribute("result", result);
-	    	return "searchReviewTest.jsp";
+	    	return "searchReviewTest";
 	    	
 	    }else {
 	    	
@@ -127,7 +127,7 @@ public class MovieController {
 	         Collections.sort(result, new SortByVote());
 	         model.addAttribute("result", result);
 	    }
-	      return "searchTest.jsp";
+	      return "searchTest";
 	   }
 	
 	

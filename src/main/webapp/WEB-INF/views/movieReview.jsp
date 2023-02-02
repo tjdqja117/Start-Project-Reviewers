@@ -16,7 +16,6 @@
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  
   <link href="<c:url value="/resources/assets/vendor/bootstrap/css/bootstrap.min.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/bootstrap-icons/bootstrap-icons.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/boxicons/css/boxicons.min.css"/>" rel="stylesheet">
@@ -24,6 +23,7 @@
   <link href="<c:url value="/resources/assets/vendor/quill/quill.bubble.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/remixicon/remixicon.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/simple-datatables/style.css"/>" rel="stylesheet">
+  <link href="<c:url value="/resources/css/sujin.css" />" rel="stylesheet"> 
   
   <!-- JS LINK -->
  <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -42,76 +42,7 @@
 <title>Insert title here</title>
 </head>
 <style>
-ul, li {
-    list-style: none;
-    
-}
-a {
-    text-decoration: none;
-    color: inherit;
-}
 
-img{
-	height:100%;
-	width: 100%;
-}
-
-.list_wrap {
-    width: 1500px;
-    margin-left:100px;
-    padding: 50px;
-}
-
-.list_wrap ul {
-    font-size: 0;
-}
-.list_wrap .item {
-    display: inline-block;
-    width: 250px;
-    margin-top: 40px;
-    margin-left: 2%;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-}
-.list_wrap .item:nth-child(-n+5) {
-    margin-top: 0;
-}
-.list_wrap .item:nth-child(5n-4) {
-    margin-left: 0;
-}
-.list_wrap .item .image {
-    width: 100%;
-    height: 200px;
-    background-color: #ddd;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-size: cover;
-}
-
-.list_wrap .item .cont {
-    padding: 20px;
-}
-.list_wrap .item strong {
-    display: block;
-    margin: 0 0 10px 0;
-    font-size: 16px;
-    letter-spacing: -1px;
-}
-.list_wrap .item p {
-    font-size: 13px;
-    letter-spacing: -1px;
-}
-.list_wrap .item a {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 5px 10px;
-    background: #eee;
-    font-size: 13px;
-    letter-spacing: -1px;
-}
-.list_wrap .item a:hover {
-    background: #325cb2;
-    color: #fff;
-}
 
 select{
      	margin-left:20px;
@@ -323,6 +254,7 @@ select{
 
   </aside><!-- End Sidebar-->
 
+<!-- 
 <main id="main" class="main">		
  	<div class="list_wrap">
        	     <ul>
@@ -340,6 +272,33 @@ select{
  				</c:forEach>
             </ul>
      </div>
+ -->
+ <main id="main" class="main">
+ 
+ <div class="css-1gkas1x-Grid e1689zdh0">
+ 	<div class="css-1y901a1-Row emmoxnt0">
+ 		<ul class="css-27z1pm-VisualUI-ContentGrid e14whxmg0">
+ 		<c:forEach items="${boardList }" var="board">
+ 			<li class="css-1hp6p72">
+ 				<a title="${board.title }" href="#">
+ 					<div class="css-1qmeemv">
+ 						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
+ 							<img src="<c:url value="/resources/images/${board.filename }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
+ 						</div>
+ 					</div>
+ 					<div class="css-ixy093">
+ 						<div class="css-niy0za">제목:${board.title }</div>
+ 							<div>
+ 								<div class="css-m9i0qw">추천:${board.like_num }</div>
+ 								<div class="css1vvt4am">작성자 : ${board.nickname }</div>
+ 							</div>
+ 					</div>
+ 				</a>
+ 			</li>
+ 		</c:forEach>
+ 		</ul>
+ 	</div>
+ </div>
   
         <br>
 <div class="text-center">

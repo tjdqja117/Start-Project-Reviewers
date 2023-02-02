@@ -124,7 +124,7 @@
 		<select id="getBoardListMain" resultMap="boardResult">
 		SELECT * 
 		FROM REVIEWBOARD 
-		WHERE 1 = 1 
+		WHERE boardnum!=4 
 		<if test="searchCondition == 'TITLE'">
 			AND TITLE LIKE '%'||#{searchKeyword}||'%'
 		</if>

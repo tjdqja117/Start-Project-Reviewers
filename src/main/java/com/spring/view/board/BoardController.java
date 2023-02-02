@@ -48,7 +48,7 @@ public class BoardController {
 		boardService.insertBoard(vo);
 		System.out.println("글 등록 처리");
 		System.out.println(vo+"임");
-		return "getBoardList.do";
+		return "redirect:getBoardList.do?boardnum=4";
 	}
 
 	// 글 수정
@@ -86,6 +86,11 @@ public class BoardController {
 			return conditionMap;
 		}
 	
+		@RequestMapping("/insertboardgo.do")
+		public String insertboardgo() {
+			
+			return "insertboard";
+		}
 
 
 	// 글 상세 조회
@@ -107,7 +112,7 @@ public class BoardController {
 		// 검색 결과를 세션에 저장하고 목록 화면으로 이동한다.
 		model.addAttribute("board", boardService.getBoard(vo));
 		
-		return "getBoard.jsp";
+		return "getBoard";
 	}
 
 	// 글 목록 검색
@@ -132,13 +137,14 @@ public class BoardController {
 				model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
 				model.addAttribute("boardnum", vo.getBoardnum());
 				if(num == 4) {
-					return "community.jsp";
+					return "community";
 				}else {
-					return "movieReview.jsp";
+					return "movieReview";
 					}
 				
 			}
-				
+	
+	
 	
 	
 	

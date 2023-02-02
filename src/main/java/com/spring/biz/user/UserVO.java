@@ -1,17 +1,17 @@
 package com.spring.biz.user;
 
 public class UserVO {
-	private String userid;
+	private String UserId;
 	private String password;
 	private String tel;
 	private String email;
 	private String name;
 	private String role;
-	public String getUserid() {
-		return userid;
+	public String getUserId() {
+		return UserId;
 	}
-	public void setUserid(String userid) {
-		this.userid = userid;
+	public void setUserId(String userId) {
+		UserId = userId;
 	}
 	public String getPassword() {
 		return password;
@@ -43,11 +43,7 @@ public class UserVO {
 	public void setRole(String role) {
 		this.role = role;
 	}
-	@Override
-	public String toString() {
-		return "UserVO [userid=" + userid + ", password=" + password + ", tel=" + tel + ", email=" + email + ", name="
-				+ name + ", role=" + role + "]";
-	}
+
 	
 	
 }
