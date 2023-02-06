@@ -35,7 +35,7 @@
   <link href="<c:url value="/resources/assets/vendor/quill/quill.snow.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/quill/quill.bubble.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/remixicon/remixicon.css"/>" rel="stylesheet">
-
+  <link href="<c:url value="/resources/sujin.css"/>" rel="stylesheet"> 
   
   
   <!-- Template Main CSS File -->
@@ -300,7 +300,7 @@ border-radius: 15px;
      
      img {
         width: 100%;
-/*         height: 100%; */
+         height:100%; 
         border-radius: 25px;
        
       }
@@ -408,7 +408,7 @@ border-radius: 15px;
             </c:when>
             <c:otherwise>
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="<c:url value="resources/assets/img/profile-img.jpg"/>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">${UserInfo.nickname }</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -459,9 +459,10 @@ border-radius: 15px;
             </li>
 
           </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
+          
      </c:otherwise>
          </c:choose>
+        </li><!-- End Profile Nav -->
 
 
       </ul>
@@ -470,7 +471,10 @@ border-radius: 15px;
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+  
+  <c:choose>
+            <c:when test="${User.userId  eq null }">
+               <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -562,6 +566,103 @@ border-radius: 15px;
     </ul>
 
   </aside><!-- End Sidebar-->
+            </c:when>
+            <c:otherwise>
+            
+            <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="testMovie.do?type=movie">
+          <i class="bi bi-grid"></i>
+          <span>메인 페이지</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="testMovie.do?type=movie">
+              <i class="bi bi-circle"></i><span>인기 영화</span>
+            </a>
+          </li>
+          <li>
+            <a href="testMovie.do?type=tv">
+              <i class="bi bi-circle"></i><span>인기 TV프로그램</span>
+            </a>
+          </li>
+          <li>
+            <a href="testMovie.do?type=webtoon">
+              <i class="bi bi-circle"></i><span>인기 웹툰</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i>
+          <span>컨텐츠 리뷰</span> <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="getBoardList.do?boardnum=1">
+              <i class="bi bi-circle"></i><span>영화</span>
+            </a>
+          </li>
+          <li>
+            <a href="getBoardList.do?boardnum=2">
+              <i class="bi bi-circle"></i><span>TV프로그램</span>
+            </a>
+          </li>
+          <li>
+            <a href="getBoardList.do?boardnum=3">
+              <i class="bi bi-circle"></i><span>웹툰</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>커뮤니티</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="getBoardList.do?boardnum=4">
+              <i class="bi bi-circle"></i><span>자유 게시판</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End Forms Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="mypage.do">
+          <i class="bi bi-person"></i>
+          <span>마이페이지</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="cs.do">
+          <i class="bi bi-question-circle"></i>
+          <span>고객센터</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="logout.do">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>로그아웃</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+    </ul>
+
+  </aside><!-- End Sidebar-->
+            </c:otherwise>
+  </c:choose>          
+   
   
   
   
@@ -629,21 +730,27 @@ border-radius: 15px;
     
     <div>
 
-    	<h2 style="margin-left:270px; ">인기 리뷰</h2>
+    	<h2 style="margin-left:270px;margin-top:100px; ">인기 리뷰</h2>
     	
     	<div class="slider">
-    	<c:forEach var="board" items="${boardList }">
-    			<li class="item item1">
-                    <div class="image"><img src="<c:url value="/resources/images/${board.filename }"/>"></div>
-                    <div class="cont">
-                        <strong>${ board.title }</strong>
-                        <p>${board.content }</p>
-                        <p>작성자:${board.nickname }</p>
-                        <p>추천:${board.like_num} &nbsp&nbsp 비추:	 ${board.unlike_num}</p>
-                        <a href="#">바로가기</a>
-       </div>
-         
- 				</c:forEach>
+    	<c:forEach items="${boardList }" var="board">
+ 			<li class="css-1hp6p72">
+ 				<a title="${board.title }" href="#">
+ 					<div class="css-1qmeemv">
+ 						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
+ 							<img src="<c:url value="/resources/images/${board.filename }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
+ 						</div>
+ 					</div>
+ 					<div class="css-ixy093">
+ 						<div class="css-niy0za">제목:${board.title }</div>
+ 							<div>
+ 								<div class="css-m9i0qw">추천:${board.like_num }</div>
+ 								<div class="css1vvt4am">작성자 : ${board.nickname }</div>
+ 							</div>
+ 					</div>
+ 				</a>
+ 			</li>
+ 		</c:forEach>
     	</div>
     </div>
   
@@ -651,27 +758,6 @@ border-radius: 15px;
     
    <!-- 인기영화 슬라이드 끝 -->
 
-                 
-
-
-
-            
-
-          
-
-             
-
-   
-
-          
-
-             
-            
-
-         
-
-      </div>
-    </section>
 
   </main><!-- End #main -->
   
@@ -703,26 +789,18 @@ border-radius: 15px;
       Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
     </div>
   </footer><!-- End Footer -->
+  
+  
+  
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
   <!-- Vendor JS Files -->
-  <!-- <script src="<c:url value="/resources/assets/vendor/apexcharts/apexcharts.min.js"/>"></script> -->
   <script src="<c:url value="/resources/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-
-  
-  <!-- <script src="<c:url value="/resources/assets/vendor/echarts/echarts.min.js"/>"></script> -->
-  
   <script src="<c:url value="/resources/assets/vendor/quill/quill.min.js"/>"></script>
-
-    <script src="<c:url value="/resources/assets/vendor/php-email-form/validate.js"/>"></script>
+  <script src="<c:url value="/resources/assets/vendor/php-email-form/validate.js"/>"></script>
   
    <script src="<c:url value="/resources/assets/js/main.js"/>"></script>
    <script src="<c:url value="/resources/assets/js/autoComplete.js"/>"></script>
-
-
-
-        
 
 </body>
 </html>

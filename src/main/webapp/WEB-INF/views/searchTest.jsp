@@ -29,7 +29,7 @@
   <link href="<c:url value="/resources/assets/vendor/quill/quill.snow.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/quill/quill.bubble.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/remixicon/remixicon.css"/>" rel="stylesheet">
-    <link href="<c:url value="/resources/css/sujin.css" />" rel="stylesheet"> 
+    <link href="<c:url value="/resources/sujin.css" />" rel="stylesheet"> 
   
   <!-- Template Main CSS File -->
   <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
@@ -52,6 +52,185 @@
 <title>검색 결과</title>
 </head>
 <style>
+
+     .login{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 80%);
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size:14px;
+    background-color: rgb(251, 247, 242);
+    line-height: 1.5em;
+    color : #222;
+    margin: 0;
+   
+    
+}
+.modal-content{
+   border-radius: 15px;
+background-color: rgb(251, 247, 242); 
+}
+
+
+.modal-content a{
+    text-decoration: none;
+    color: #222;
+}
+
+
+
+.login{
+    border-radius: 10px;
+}
+
+/*member sign in*/
+.member{
+    width: 400px;
+    /* border: 1px solid #000; */
+    margin: auto; /*중앙 정렬*/
+    padding: 0 20px;
+     
+    margin-bottom: 20px;
+      text-align: center;
+   display:block;
+   color:coral;
+   padding : 15px;
+}
+
+.member .logo{
+    /*로고는 이미지라 인라인 블록이니까 마진 오토 안됨 블록요소만 됨 */
+    display: block;
+    margin :50px auto;
+}
+
+.member .field{
+    margin :5px 0; /*상하로 좀 띄워주기*/
+}
+
+.member b{
+    /* border: 1px solid #000; */
+    display: block; /*수직 정렬하기 */
+    margin-bottom: 5px;
+}
+
+/*input 중 radio 는 width 가 100%면 안되니까 */
+.member input:not(input[type=radio]),.member select{
+    border: 1px solid #dadada;
+    padding: 15px;
+    width: 100%;
+    margin-bottom: 5px;
+    border-radius: 10px;
+}
+
+.member input[type=submit]{
+    margin-top: 10px;
+}
+
+.member input[type=button],
+.member input[type=submit]{
+font-size: 18px;
+border-radius: 10px;
+background-color: coral;
+color:#fff
+}
+
+.member-footer a{
+    font-size: 13px;
+}
+
+.member input:focus, .member select:focus{
+    border: 1px solid #2db400;
+}
+
+.field.birth div{ /*field 이면서 birth*/
+    display: flex;
+    gap:10px; /*간격 벌려줄때 공식처럼 사용핟나 */
+}
+
+/* .field.birth div > * {  gap 사용한거랑 같은 효과를 줌 
+    flex:1;
+} */
+
+.field.tel-number div {
+    display: flex;
+}
+
+.field.tel-number div input:nth-child(1){
+    flex:2;
+}
+
+.field.tel-number div input:nth-child(2){
+    flex:1;
+}
+
+.field.gender div{
+    border: 1px solid #dadada;
+    padding: 15px 5px;
+    background-color: #fff;
+}
+
+.placehold-text{
+    display: block; /*span 으로 감싸서 크기영역을 블록요소로 만들어ㅜ저야한다*/
+    position:relative;
+    /* border: 1px solid #000; */
+}
+
+.placehold-text:before{ 
+    content : "";
+    position:absolute; /*before은 inline 요소이기 때문에 span으로 감싸줌 */
+    right : 20px;
+    top:13px;
+    pointer-events: none; /*자체가 가지고 있는 pointer event 를 없애준다 */
+}
+
+.userpw{
+    background:url(./images/images2/icon-01.png) no-repeat center right 15px;
+    background-size: 20px;
+    background-color: #fff;
+}
+
+.userpw-confirm{
+    background:url(./images/images2/icon-02.png) no-repeat center right 15px;
+    background-size: 20px;
+    background-color: #fff;
+}
+
+.member-footer {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 20px;
+}
+
+.member-footer div a:hover{
+    text-decoration: underline;
+    color:#2db400
+}
+
+.member-footer div a:after{
+    content:'|';
+    font-size: 10px;
+    color:#bbb;
+    margin-right: 5px;
+    margin-left: 7px;
+    /*살짝 내려가 있기 때문에 위로 올려주기 위해 transform 사용하기*/
+    display: inline-block;
+    transform: translateY(-1px);
+
+}
+
+.member-footer div a:last-child:after{
+    display: none;
+}
+
+border-radius: 15px;
+    background-color: rgb(251, 247, 242);
+@media (max-width:768px) {
+    .member{
+        width: 100%;
+    }
+}
 ul, li {
     list-style: none;
     
@@ -60,11 +239,12 @@ a {
     text-decoration: none;
     color: inherit;
 }
-
-img{
-	height:100%;
-	width: 100%;
-}
+     img {
+        width: 100%;
+         height:100%; 
+        border-radius: 25px;
+       
+      }
 
 .list_wrap {
     width: 1500px;
@@ -148,7 +328,7 @@ select{
 
 <body>
 
- <!-- ======= Header ======= -->
+   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
@@ -201,7 +381,7 @@ select{
             </c:when>
             <c:otherwise>
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <img src="<c:url value="resources/assets/img/profile-img.jpg"/>" alt="Profile" class="rounded-circle">
             <span class="d-none d-md-block dropdown-toggle ps-2">${UserInfo.nickname }</span>
           </a><!-- End Profile Iamge Icon -->
 
@@ -252,9 +432,10 @@ select{
             </li>
 
           </ul><!-- End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
+          
      </c:otherwise>
          </c:choose>
+        </li><!-- End Profile Nav -->
 
 
       </ul>
@@ -263,7 +444,10 @@ select{
   </header><!-- End Header -->
 
   <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
+  
+  <c:choose>
+            <c:when test="${User.userId  eq null }">
+               <aside id="sidebar" class="sidebar">
 
     <ul class="sidebar-nav" id="sidebar-nav">
 
@@ -345,9 +529,8 @@ select{
         </a>
       </li><!-- End F.A.Q Page Nav -->
 
-
-<li class="nav-item">
-      <a class="nav-link collapsed" href="login.do" data-toggle="modal"
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="login.do" data-toggle="modal"
                   data-target="#exampleModalCenter">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>로그인</span>
@@ -356,6 +539,103 @@ select{
     </ul>
 
   </aside><!-- End Sidebar-->
+            </c:when>
+            <c:otherwise>
+            
+            <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="testMovie.do?type=movie">
+          <i class="bi bi-grid"></i>
+          <span>메인 페이지</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="testMovie.do?type=movie">
+              <i class="bi bi-circle"></i><span>인기 영화</span>
+            </a>
+          </li>
+          <li>
+            <a href="testMovie.do?type=tv">
+              <i class="bi bi-circle"></i><span>인기 TV프로그램</span>
+            </a>
+          </li>
+          <li>
+            <a href="testMovie.do?type=webtoon">
+              <i class="bi bi-circle"></i><span>인기 웹툰</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Dashboard Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-menu-button-wide"></i>
+          <span>컨텐츠 리뷰</span> <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="getBoardList.do?boardnum=1">
+              <i class="bi bi-circle"></i><span>영화</span>
+            </a>
+          </li>
+          <li>
+            <a href="getBoardList.do?boardnum=2">
+              <i class="bi bi-circle"></i><span>TV프로그램</span>
+            </a>
+          </li>
+          <li>
+     <a href="getBoardList.do?boardnum=3">
+              <i class="bi bi-circle"></i><span>웹툰</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End Components Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>커뮤니티</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="getBoardList.do?boardnum=4">
+              <i class="bi bi-circle"></i><span>자유 게시판</span>
+            </a>
+          </li>
+          
+        </ul>
+      </li><!-- End Forms Nav -->
+
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="mypage.do">
+          <i class="bi bi-person"></i>
+          <span>마이페이지</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="cs.do">
+          <i class="bi bi-question-circle"></i>
+          <span>고객센터</span>
+        </a>
+      </li><!-- End F.A.Q Page Nav -->
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="logout.do">
+          <i class="bi bi-box-arrow-in-right"></i>
+          <span>로그아웃</span>
+        </a>
+      </li><!-- End Login Page Nav -->
+    </ul>
+
+  </aside><!-- End Sidebar-->
+            </c:otherwise>
+  </c:choose>          
+   
   
   
   
@@ -364,22 +644,66 @@ select{
   
   
    <main id="main" class="main">
+   <!-- Modal -->
+               <div class="modal fade" id="exampleModalCenter" tabindex="-1"
+                  role="dialog" aria-labelledby="exampleModalCenterTitle"
+                  aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                     <div class="modal-content">
 
-<div class="list_wrap">
-       	     <ul>
- 				<c:forEach items="${result }" var="result">
-              	  <li class="item item1">
-                    <div class="image"><img src="<c:url value="${result.poster_path }"/>"></div>
-                    <div class="cont">
-                        <strong>${ result.title }</strong>
-                        <p>⭐: ${result.vote_average} &nbsp&nbsp </p>
-                        <p>장르:${result.genres }</p>
-                        <a href="ContentsDetail.do?type=${result.contents_type }&id=${result.contents_num }">바로가기</a>
-                    </div>
-         
- 				</c:forEach>
-            </ul>
-     </div>
+                        <div class="modal-body">
+                           <div class="member">
+                              <form action="login.do" method="post">
+                                 <h2>#REVIEWERS</h2>
+                                 <h1>로그인</h1>
+                                 <div class="field">
+                                    <b>아이디</b> <span class="placehold-text"><input
+                                       type="text" id="UserId" name="UserId"></span>
+                                 </div>
+                                 <div class="field">
+                                    <b>비밀번호</b> <input class="userpw" type="password"
+                                       id="password" name="password">
+                                 </div>
+                                 <input type="submit" value="로그인">
+                                 <div class="member-footer">
+                                    <hr>
+                                    <div>
+                                       <a href="sign_up.jsp">회원가입</a> <a href="findId.do">아이디
+                                          찾기</a> <a href="updatePasswordGo.do">비밀번호 찾기</a>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+
+     <div class="css-1gkas1x-Grid e1689zdh0">
+ 	<div class="css-1y901a1-Row emmoxnt0">
+ 		<ul class="css-27z1pm-VisualUI-ContentGrid e14whxmg0" style="width:80%;margin:auto;">
+ 		<c:forEach items="${result }" var="result">
+ 			<li class="css-1hp6p72">
+ 				<a title="${result.title }" href="ContentsDetail.do?type=${result.contents_type }&id=${result.contents_num }">
+ 					<div class="css-1qmeemv">
+ 						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
+ 						<img src="<c:url value="${result.poster_path }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
+ 						</div>
+ 					</div>
+ 					<div class="css-ixy093">
+ 						<div class="css-niy0za">제목:${ result.title }</div>
+ 							<div>
+ 								<div class="css-m9i0qw">⭐: ${result.vote_average}</div>
+ 							</div>
+ 					</div>
+ 				</a>
+ 			</li>
+ 		</c:forEach>
+ 		</ul>
+ 	</div>
+ </div>
     
 
     

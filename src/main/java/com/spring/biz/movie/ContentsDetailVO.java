@@ -15,17 +15,17 @@ public class ContentsDetailVO {
 	private float vote_average; // 컨텐츠 평점
 	private float popularity; // 인기도
 	private String genre; // 컨텐츠 장르(String 타입으로 변환시켜 저장)
+	private List<Integer> genress; // 컨텐츠 장르(int 타입 그대로 List객체에 저장)
 	private String runtime; // 컨텐츠 런타임
 	private List<String> genres;
 	
-	public List<String> getGenres(){
+	
+	public List<String> getGenres() {
 		return genres;
 	}
-	
-	public void setGenres(List<String> genres){
+	public void setGenres(List<String> genres) {
 		this.genres = genres;
 	}
-	
 	public int getContents_num() {
 		return contents_num;
 	}
@@ -73,7 +73,8 @@ public class ContentsDetailVO {
 		return vote_average;
 	}
 	public void setVote_average(float vote_average) {
-		this.vote_average = vote_average;
+		float voteaverage = (float) (Math.round(vote_average*100)/100.0);
+		this.vote_average = voteaverage;
 	}
 	public float getPopularity() {
 		return popularity;
@@ -90,8 +91,13 @@ public class ContentsDetailVO {
 	public String getRuntime() {
 		return runtime;
 	}
+	public List<Integer> getGenress() {
+		return genress;
+	}
+	public void setGenress(List<Integer> genress) {
+		this.genress = genress;
+	}
 	public void setRuntime(String runtime) {
-		
 		// 영화일 경우 러닝 타임을 숫자 형태의 값을 시간 형태로 변환
 		if (!runtime.contains("시즌")) {
 			int run_time = Integer.parseInt(runtime);
@@ -112,6 +118,6 @@ public class ContentsDetailVO {
 			this.runtime = runtime;
 		}
 	}
-
+	
 	
 }

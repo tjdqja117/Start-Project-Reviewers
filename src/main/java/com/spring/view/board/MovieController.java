@@ -104,9 +104,54 @@ public class MovieController {
 	}
 	
 	@RequestMapping(value = "ContentsDetail.do")
-	public String Detail(@RequestParam(value = "type") String contents_type,Model mode,@RequestParam(value = "id") int contents_num,ContentsDetailVO vo) {
+	public String Detail(@RequestParam(value = "type") String contents_type,Model mode,@RequestParam(value = "id") int contents_num) {
 		getContentInfo info = new getContentInfo();
 		
+		ContentsDetailVO contents = info.getInfoDetail(contents_type, contents_num);
+		List<ContentsDetailVO> reco = new ArrayList<ContentsDetailVO>();
+		
+		// 임시로 사용할 List 생성
+				List<ContentsDetailVO> temp = new ArrayList<ContentsDetailVO>();
+				// 일단 모든 컨텐츠를 불러와서 저장
+				temp = info.getInfoList(contents_type);
+
+				for (int i = 0; i < temp.size(); i++) {
+					List<Integer> list1 = new ArrayList<Integer>(temp.get(i).getGenress()); // 모든 컨텐츠들의 장르를 for문을 돌면서 계속 바꿔주면서 넣어줌
+					List<Integer> list2 = new ArrayList<Integer>(contents.getGenress()); // 상세 페이지에 출력할 컨텐츠의 장르
+
+					/* 즉, 하나의 컨텐츠의 장르와 여러개의 컨텐츠의 장르를 루프를 통해 매번 서로 비교하는것 */
+
+					// 등록되어 있는 장르가 1개일 경우
+					if (list2.size() == 1) {
+						list1.retainAll(list2);
+						if (list1.size() == 1) {
+							ContentsDetailVO vo = new ContentsDetailVO();
+							vo = temp.get(i);
+							reco.add(vo);
+						}
+						// 등록되어 있는 장르가 2개일 경우
+					} else if (list2.size() == 2) {
+						list1.retainAll(list2);
+						if (list1.size() == 2) {
+							ContentsDetailVO vo = new ContentsDetailVO();
+							vo = temp.get(i);
+							reco.add(vo);
+						}
+					} else {
+						list1.retainAll(list2);
+						// 적어도 겹치는 장르가 세개 이상인 경우만 출력
+						if (list1.size() >= 3) {
+							ContentsDetailVO vo = new ContentsDetailVO();
+							vo = temp.get(i);
+							reco.add(vo);
+						}
+					}
+				}
+		
+		mode.addAttribute("reco", reco);
+		mode.addAttribute("image",info.getImages(contents_type, contents_num));
+		mode.addAttribute("cast",info.getCredits(contents_type, contents_num, "cast"));
+		mode.addAttribute("crew",info.getCredits(contents_type, contents_num, "crew"));
 		mode.addAttribute("info",info.getjsonObjectInfo(contents_type, contents_num));
 		return "testDetail";
 	}
