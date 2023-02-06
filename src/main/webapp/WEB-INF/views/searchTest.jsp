@@ -693,7 +693,7 @@ select{
  						</div>
  					</div>
  					<div class="css-ixy093">
- 						<div class="css-niy0za">제목:${ result.title }</div>
+ 						<div class="css-niy0za"><strong>${ result.title }</strong></div>
  							<div>
  								<div class="css-m9i0qw">⭐: ${result.vote_average}</div>
  							</div>

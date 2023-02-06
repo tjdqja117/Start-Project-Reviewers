@@ -83,4 +83,8 @@ public class MovieBoardDAO {
 		
 		return mybatis.selectList("MovieBoardDAO.getBoardListWithDynamicPaging", cri);
 	}
+	
+	public int getSeq() {
+		return mybatis.selectOne("MovieBoardDAO.getSeq");
+	}
 }

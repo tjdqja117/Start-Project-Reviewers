@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -180,71 +183,85 @@ public class MovieController {
 	
 	
 	public JSONArray autoSearch(String searchCondition,String searchKeyword, MovieBoardVO vo) throws IOException {
-		
-		int size=0;
-		 
-	    JSONArray arrayObj = new JSONArray();
-	    JSONObject jsonObj = null; 
-	    ArrayList<String> resultlist = new ArrayList<String>();
-	    System.out.println(searchCondition);
-	    System.out.println(searchKeyword);
-	 
+	      
+	      int size=0;
+	       
+	       JSONArray arrayObj = new JSONArray();
+	       JSONObject jsonObj = null; 
+	       ArrayList<String> resultlist = new ArrayList<String>();
+	       HashMap<String, Integer> resulthash = new HashMap<String, Integer>();
+	       System.out.println(searchCondition);
+	       System.out.println(searchKeyword);
 	    
-	    if(searchCondition.equals("movie") || searchCondition.equals("tv")) {
-		getSearchUtil search = new getSearchUtil();
-        List<SearchVO> result = search.getInfoList(searchCondition ,searchKeyword);
-        Collections.sort(result, new SortByVote());
-        if(result.size()>=10) {
-        	size = 10;
-        	
-        }else {
-        	size=result.size();
-        }
-        
-	    for(int i=0;i<size;i++) { 
-	        String str = result.get(i).getTitle();
-	        resultlist.add(str); 
-	    } 
-	    //뽑은 후 json파싱 
-	    for(String str : resultlist) {
-	        jsonObj = new JSONObject();
-	        jsonObj.put("data", str);
-	        arrayObj.add(jsonObj); 
+	       
+	       if(searchCondition.equals("movie") || searchCondition.equals("tv")) {
+	      getSearchUtil search = new getSearchUtil();
+	        List<SearchVO> result = search.getInfoList(searchCondition ,searchKeyword);
+	       
+	        Collections.sort(result, new SortByVote());
 	        
-	    } 
-        
-	    }else {
-    	List<MovieBoardVO> result =	boardService.getSearchReview(vo);	
-    	Collections.sort(result, new SortByLike());
-    	
-        if(result.size()>=10) {
-        	size = 10;
-        	
-        }else {
-        	size=result.size();
-        }
-        
-	    for(int i=0;i<size;i++) { 
-	        String str = result.get(i).getTitle();
-	        resultlist.add(str); 
-	    } 
-	    //뽑은 후 json파싱 
-	    for(String str : resultlist) {
-	        jsonObj = new JSONObject();
-	        jsonObj.put("data", str);
-	        arrayObj.add(jsonObj); 
+	        if(result.size()>=10) {
+	           size = 10;
+	           
+	        }else {
+	           size=result.size();
+	        }
 	        
-	    } 
-	    }
-    
-        
-     
-	
+	       for(int i=0;i<size;i++) { 
+	           String str = result.get(i).getTitle();
+	           int num = result.get(i).getContents_num();
+	           resulthash.put(str,num); 
+	       } 
+	       
+	       Iterator<HashMap.Entry<String, Integer>> itr = resulthash.entrySet().iterator();
+	       while(itr.hasNext()) {
+	          
+	          Map.Entry<String, Integer> entry = itr.next();
+	          jsonObj = new JSONObject();
+	           jsonObj.put("data", entry.getKey());
+	           jsonObj.put("value", entry.getValue());      
+	           arrayObj.add(jsonObj); 
+	       }
+	       //뽑은 후 json파싱 
+//	       for(String str : resulthash.) {
+//	           jsonObj = new JSONObject();
+//	           jsonObj.put("data", str);
+//	           arrayObj.add(jsonObj); 
+//	           
+//	       } 
+	        
+	       }else {
+	       List<MovieBoardVO> result =   boardService.getSearchReview(vo);   
+	       Collections.sort(result, new SortByLike());
+	       
+	        if(result.size()>=10) {
+	           size = 10;
+	           
+	        }else {
+	           size=result.size();
+	        }
+	        
+	       for(int i=0;i<size;i++) { 
+	           String str = result.get(i).getTitle();
+	           resultlist.add(str); 
+	       } 
+	       //뽑은 후 json파싱 
+	       for(String str : resultlist) {
+	           jsonObj = new JSONObject();
+	           jsonObj.put("data", str);
+	           arrayObj.add(jsonObj); 
+	           
+	       } 
+	       }
+	    
+	        
+	     
+	   
 
-	    System.out.println(arrayObj);
-	    return arrayObj;
-	 
-	}
+	       System.out.println(arrayObj);
+	       return arrayObj;
+	    
+	   }
 	
 	
 		@ResponseBody

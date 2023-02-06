@@ -24,6 +24,8 @@ public interface BoardService {
 	// 메인페이지 인기 리뷰
 	List<MovieBoardVO> getBoardListMain(SearchCriteria cri);
 	
+	int getSeq();
+	
 	// 글 목록 조회
 	int getTotalPages(MovieBoardVO vo);
 

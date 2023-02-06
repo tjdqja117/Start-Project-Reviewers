@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,8 @@ import com.spring.biz.board.BoardService;
 import com.spring.biz.board.MovieBoardVO;
 import com.spring.biz.board.PageDTO;
 import com.spring.biz.board.SearchCriteria;
+import com.spring.biz.hashTag.HashTagService;
+import com.spring.biz.hashTag.HashTagVO;
 
 
 
@@ -31,25 +35,42 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private HashTagService hashtagService;
 	
 	
 	// 글 등록
-	@RequestMapping(value="insertBoard.do")
-	public String insertBoard(MovieBoardVO vo) throws IOException {
-
-//		logger.debug("[LOG] 글 등록 처리");
-		
-//		// 파일 업로드 처리
-//				MultipartFile uploadFile = vo.getUploadFile();
-//				if (!uploadFile.isEmpty()) {
-//					String filename = uploadFile.getOriginalFilename();
-//					uploadFile.transferTo(new File("C:/" + filename));
-//				}
-		boardService.insertBoard(vo);
-		System.out.println("글 등록 처리");
-		System.out.println(vo+"임");
-		return "redirect:getBoardList.do?boardnum=4";
-	}
+		@RequestMapping(value="insertBoard.do")
+		public String insertBoard(MovieBoardVO vo,String basic,HashTagVO Hvo) throws IOException {
+			int seq = boardService.getSeq();
+			vo.setBseq(seq);
+			Hvo.setBseq(seq);
+			try {
+				JSONArray arr = new JSONArray(basic);
+				String[] list = null;
+				int len = arr.length();
+				if(arr!=null) {
+					list = new String[len];
+					for(int i = 0;i<len;i++) {
+						list[i] = arr.getJSONObject(i).getString("value");
+						System.out.println(list[i]);
+						Hvo.setHashtag(list[i]);
+						hashtagService.insertHashTag(Hvo);
+					}
+				}
+				System.out.println(list);
+			} catch (JSONException e) {
+				 e.printStackTrace();
+				
+			}
+			System.out.println(vo.getBseq());
+			
+			
+			boardService.insertBoard(vo);
+			
+			System.out.println();
+			return "testMovie.do";
+		}
 
 	// 글 수정
 	@RequestMapping(value="updateBoard.do")
@@ -89,7 +110,7 @@ public class BoardController {
 		@RequestMapping("/insertboardgo.do")
 		public String insertboardgo() {
 			
-			return "insertboard";
+			return "insertBoard";
 		}
 
 
@@ -143,6 +164,11 @@ public class BoardController {
 					}
 				
 			}
+	
+	@RequestMapping(value="cs.do")
+	public String faq() {
+		return "faq-write-form";
+	}
 	
 	
 	

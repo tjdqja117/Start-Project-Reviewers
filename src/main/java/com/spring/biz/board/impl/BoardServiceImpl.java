@@ -83,6 +83,12 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getSearchReview(vo);
 	}
 
+	@Override
+	public int getSeq() {
+		// TODO Auto-generated method stub
+		return boardDAO.getSeq();
+	}
+
 	
 
 }
