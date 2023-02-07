@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.biz.CntHistory.CntHistoryVO;
 import com.spring.biz.board.MovieBoardVO;
 import com.spring.biz.board.SearchCriteria;
 
@@ -37,9 +38,23 @@ public class MovieBoardDAO {
 	
 	public MovieBoardVO getBoard(MovieBoardVO vo) {
 		System.out.println("getBoard 기능 수행");
-		
 		return (MovieBoardVO) mybatis.selectOne("MovieBoardDAO.getBoard",vo);
 		
+	}
+	
+	
+	public CntHistoryVO getCntBoard(CntHistoryVO cvo) {
+		System.out.println("CntHistory board 읽기");
+		return (CntHistoryVO) mybatis.selectOne("MovieBoardDAO.getCntBoard", cvo);
+	}
+	
+	// 조회수 증가
+	public void updateCnt(MovieBoardVO vo) {
+		 mybatis.update("MovieBoardDAO.updateCnt", vo);
+	}
+	
+	public void insertCntHistory(CntHistoryVO cvo) {
+		mybatis.insert("MovieBoardDAO.insertCntHistory", cvo);
 	}
 	
 	public List<MovieBoardVO> getBoardList(MovieBoardVO vo){

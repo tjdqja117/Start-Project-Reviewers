@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.spring.biz.CntHistory.CntHistoryVO;
 import com.spring.biz.board.BoardService;
 
 import com.spring.biz.board.MovieBoardVO;
@@ -27,10 +31,13 @@ import com.spring.biz.board.PageDTO;
 import com.spring.biz.board.SearchCriteria;
 import com.spring.biz.hashTag.HashTagService;
 import com.spring.biz.hashTag.HashTagVO;
+import com.spring.biz.user.UserVO;
+import com.spring.biz.userInfo.UserInfoVO;
 
 
 
 @Controller
+@SessionAttributes({"User","UserInfo"})
 public class BoardController {
 	
 	@Autowired
@@ -41,11 +48,23 @@ public class BoardController {
 	
 	// 글 등록
 		@RequestMapping(value="insertBoard.do")
-		public String insertBoard(MovieBoardVO vo,String basic,HashTagVO Hvo) throws IOException {
+		public String insertBoard(MovieBoardVO vo,String basic,HashTagVO Hvo,@RequestParam(value="SC") String code) throws IOException {
 			int seq = boardService.getSeq();
+			int num;
+			if(code.equals("movie")) {
+				num=1;
+			}else if(code.equals("tv")){
+				num=2;
+			}else if(code.equals("webtoon")) {
+				num=3;
+			}else {
+				num=4;
+			}
+			vo.setBoardnum(num);
 			vo.setBseq(seq);
 			Hvo.setBseq(seq);
 			try {
+				if(basic != null) {
 				JSONArray arr = new JSONArray(basic);
 				String[] list = null;
 				int len = arr.length();
@@ -59,17 +78,21 @@ public class BoardController {
 					}
 				}
 				System.out.println(list);
+				}
 			} catch (JSONException e) {
 				 e.printStackTrace();
 				
 			}
 			System.out.println(vo.getBseq());
-			
+			System.out.println(vo.getBoardnum());
+			System.out.println(vo.getContent());
+			System.out.println(vo.getTitle());
+			System.out.println(vo.getNickname());
+			System.out.println(vo.getUserId());
+
 			
 			boardService.insertBoard(vo);
-			
-			System.out.println();
-			return "testMovie.do";
+			return "index";
 		}
 
 	// 글 수정
@@ -116,22 +139,37 @@ public class BoardController {
 
 	// 글 상세 조회
 	@RequestMapping(value="/getBoard.do")
-	public String getBoard(MovieBoardVO vo,@ModelAttribute("cri") SearchCriteria cri, Model model) {
-
+	public String getBoard(MovieBoardVO vo, Model model, UserVO uvo,HttpServletRequest request, CntHistoryVO cvo) {
 		System.out.println("글 상세 조회 처리");
+		HttpSession session = request.getSession();
+		if((UserVO) session.getAttribute("User") != null) {			
+			uvo = (UserVO) session.getAttribute("User");
+			System.out.println(uvo.getUserId());
+			System.out.println(cvo.getBseq());
+			
+			cvo.setUserId(uvo.getUserId());
+			if(boardService.getCntBoard(cvo) == null) {
+				boardService.insertCntHistory(cvo);
+				boardService.updateCnt(vo);
+			}
+		}
+
+	
+		
 //		logger.debug("[LOG] 글 상세 조회 처리");
 		
 		// NULL Check
-				if (cri.getSearchCondition() == null) {
-					cri.setSearchCondition("TITLE");
+				if (vo.getSearchCondition() == null) {
+					vo.setSearchCondition("TITLE");
 				}
-				if (cri.getSearchKeyword() == null) {
-					cri.setSearchKeyword("");
+				if (vo.getSearchKeyword() == null) {
+					vo.setSearchKeyword("");
 				}
 		
 	
 		// 검색 결과를 세션에 저장하고 목록 화면으로 이동한다.
 		model.addAttribute("board", boardService.getBoard(vo));
+		
 		
 		return "getBoard";
 	}

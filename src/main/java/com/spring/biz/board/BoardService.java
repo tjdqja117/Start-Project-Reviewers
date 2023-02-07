@@ -2,6 +2,8 @@ package com.spring.biz.board;
 
 import java.util.List;
 
+import com.spring.biz.CntHistory.CntHistoryVO;
+
 
 public interface BoardService {
 	// CRUD 기능의 메소드 구현
@@ -21,6 +23,11 @@ public interface BoardService {
 	// 글 목록 조회
 	List<MovieBoardVO> getBoardList(MovieBoardVO vo);
 	
+	CntHistoryVO getCntBoard(CntHistoryVO cvo);
+	
+	void insertCntHistory(CntHistoryVO cvo);
+	void updateCnt(MovieBoardVO vo);
+	
 	// 메인페이지 인기 리뷰
 	List<MovieBoardVO> getBoardListMain(SearchCriteria cri);
 	
@@ -36,5 +43,6 @@ public interface BoardService {
 	List<MovieBoardVO> getBoardListWithDynamicPaging(SearchCriteria cri);
 	
 	// 리뷰 검색 
-	List<MovieBoardVO> getSearchReview(MovieBoardVO vo);	
+	List<MovieBoardVO> getSearchReview(MovieBoardVO vo);
+
 }

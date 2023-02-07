@@ -688,6 +688,8 @@ select{
 		);
 	});
 </script>
+
+<button class="btn btn-dark" onClick="location.href='insertboardgo.do'">리뷰 작성</button>
                 </main><!-- End #main -->
 
 

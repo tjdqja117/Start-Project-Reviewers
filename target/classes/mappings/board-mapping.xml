@@ -20,31 +20,9 @@
 	</resultMap>
 
 	<insert id="insertBoard">
-		
-		INSERT INTO REVIEWBOARD(
-		BSEQ,
-		BOARDNUM,
-		TITLE,
-		NICKNAME,
-		CONTENT,
-		FILENAME,
-		LIKE_NUM,
-		UNLIKE_NUM,
-		CNT,
-		USERID
-		) 
-		VALUES (
-		(select nvl(max(bseq), 0) + 1 from reviewboard),
-		 #{boardnum}, 
-		 #{title},
-		 #{nickname}, 
-		 #{content}, 
-		 null, 
-		 0, 
-		 0, 
-		 0, 
-		 #{userId})
-		
+		 <![CDATA[INSERT INTO  reviewboard(bseq, boardnum, title, nickname,  content, filename, like_num, unlike_num, cnt, UserId,writedate)
+		VALUES (#{bseq}, #{boardnum}, #{title},#{nickname}, #{content},null
+		, 0, 0, 0, #{userId},sysdate)]]>	
 	</insert>
 	
 	<update id="updateBoard">
@@ -71,8 +49,24 @@
 		]]>
 	</select>
 	
+	<select id="getCntBoard" resultType="cnt">
+		<![CDATA[
+			SELECT * 
+			FROM ReviewCntHistory 
+			WHERE BSEQ = #{bseq} AND USERID = #{userId} 
+		]]>
+	</select>
+	
+	<update id="updateCnt">
+		UPDATE REVIEWBOARD SET CNT = CNT+1 WHERE BSEQ=#{bseq}
+	</update>
+	
+	<insert id="insertCntHistory">
+		INSERT INTO REVIEWCNTHISTORY(BSEQ, USERID) VALUES(#{bseq}, #{userId})
+	</insert>
+	
 	<select id="getSeq" resultType="int">
-		 <![CDATA[select nvl(max("bseq"), 0) + 1 from "reviewboard"]]>
+		 <![CDATA[select nvl(max(bseq), 0) + 1 from reviewboard]]>
 	</select>
 	
 	

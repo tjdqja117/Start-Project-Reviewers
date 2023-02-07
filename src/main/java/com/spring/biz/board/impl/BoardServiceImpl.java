@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.biz.CntHistory.CntHistoryVO;
 import com.spring.biz.board.BoardService;
 import com.spring.biz.board.MovieBoardVO;
 //import com.spring.biz.common.LogAdvice;
@@ -35,11 +36,13 @@ public class BoardServiceImpl implements BoardService {
 
 	public void deleteBoard(MovieBoardVO vo) {
 //		log.printLog();
+
 		boardDAO.deleteBoard(vo);
 	}
 
 	public MovieBoardVO getBoard(MovieBoardVO vo) {
 //		log.printLog();
+
 		return boardDAO.getBoard(vo);
 	}
 
@@ -48,13 +51,17 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getBoardList(vo);
 	}
 	
+	@Override
+	public void insertCntHistory(CntHistoryVO cvo) {
+		boardDAO.insertCntHistory(cvo);
+		
+	}
 	
-	
-
-	
-	
-	
-	
+	@Override
+	public void updateCnt(MovieBoardVO vo) {
+		boardDAO.updateCnt(vo);
+		
+	}
 	
 	@Override
 	public int getTotalPages(MovieBoardVO vo) {
@@ -89,6 +96,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardDAO.getSeq();
 	}
 
-	
+	@Override
+	public CntHistoryVO getCntBoard(CntHistoryVO cvo) {
+		// TODO Auto-generated method stub
+		return boardDAO.getCntBoard(cvo);
+	}
 
 }

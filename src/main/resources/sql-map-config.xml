@@ -10,6 +10,8 @@
 		<typeAlias type="com.spring.biz.user.UserVO" alias="user"/>
 		<typeAlias type="com.spring.biz.userInfo.UserInfoVO" alias="userInfo"/>
 		<typeAlias alias="board" type="com.spring.biz.board.MovieBoardVO"></typeAlias>
+		<typeAlias alias="cnt"	type="com.spring.biz.CntHistory.CntHistoryVO"></typeAlias>
+		<typeAlias type="com.spring.biz.hashTag.HashTagVO" alias="hashTag"/>
 	</typeAliases>
 	
 	<!-- Sql Mapper 설정 -->
@@ -17,5 +19,6 @@
 		<mapper resource="mappings/user-mapping.xml"/>
 		<mapper resource="mappings/userInfo-mapping.xml"/>
 		<mapper resource="mappings/board-mapping.xml"/>
+		<mapper resource="mappings/HashTag-mapping.xml"/>
 	</mappers>
 </configuration>
