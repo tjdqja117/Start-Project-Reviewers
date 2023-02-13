@@ -1,0 +1,117 @@
+package com.spring.biz.board.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.spring.biz.CntHistory.CntHistoryVO;
+import com.spring.biz.board.BoardService;
+import com.spring.biz.board.MovieBoardVO;
+//import com.spring.biz.common.LogAdvice;
+import com.spring.biz.board.SearchCriteria;
+
+
+
+@Service("BoardService")
+public class BoardServiceImpl implements BoardService {
+	
+	@Autowired
+	private MovieBoardDAO boardDAO;
+//	private LogAdvice log;
+	
+//	public BoardServiceImpl() {
+//		log = new LogAdvice();
+//	}
+
+	public void insertBoard(MovieBoardVO vo) {
+//		log.printLog();
+		boardDAO.insertBoard(vo);
+	}
+
+	public void updateBoard(MovieBoardVO vo) {
+//		log.printLog();
+		boardDAO.updateBoard(vo);
+	}
+
+	public void deleteBoard(MovieBoardVO vo) {
+//		log.printLog();
+
+		boardDAO.deleteBoard(vo);
+	}
+
+	public MovieBoardVO getBoard(MovieBoardVO vo) {
+//		log.printLog();
+
+		return boardDAO.getBoard(vo);
+	}
+
+	public List<MovieBoardVO> getBoardList(MovieBoardVO vo) {
+//		log.printLog();
+		return boardDAO.getBoardList(vo);
+	}
+	
+	@Override
+	public void insertCntHistory(CntHistoryVO cvo) {
+		boardDAO.insertCntHistory(cvo);
+		
+	}
+	
+	@Override
+	public void updateCnt(MovieBoardVO vo) {
+		boardDAO.updateCnt(vo);
+		
+	}
+	
+	@Override
+	public int getTotalPages(MovieBoardVO vo) {
+		return boardDAO.getTotalPages(vo);
+	}
+
+	@Override
+	public List<MovieBoardVO> getBoardListWithPaging(SearchCriteria cri) {
+		return boardDAO.getBoardListWithPaging(cri);
+	}
+
+	@Override
+	public List<MovieBoardVO> getBoardListWithDynamicPaging(SearchCriteria cri) {
+		return boardDAO.getBoardListWithDynamicPaging(cri);
+	}
+
+	@Override
+	public List<MovieBoardVO> getBoardListMain(SearchCriteria cri) {
+		
+		return boardDAO.getBoardListMain(cri);
+	}
+
+	@Override
+	public List<MovieBoardVO> getSearchReview(MovieBoardVO vo) {
+	
+		return boardDAO.getSearchReview(vo);
+	}
+
+	@Override
+	public int getSeq() {
+		// TODO Auto-generated method stub
+		return boardDAO.getSeq();
+	}
+
+	@Override
+	public CntHistoryVO getCntBoard(CntHistoryVO cvo) {
+		// TODO Auto-generated method stub
+		return boardDAO.getCntBoard(cvo);
+	}
+	
+	@Override
+	public void reportUpdateReviewY(MovieBoardVO vo) {
+		// TODO Auto-generated method stub
+		boardDAO.reportUpdateReviewY(vo);
+	}
+
+	@Override
+	public void reportUpdateReviewN(MovieBoardVO vo) {
+		// TODO Auto-generated method stub
+		boardDAO.reportUpdateReviewN(vo);
+	}
+
+}
