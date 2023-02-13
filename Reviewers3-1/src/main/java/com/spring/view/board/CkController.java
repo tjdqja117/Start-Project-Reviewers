@@ -27,20 +27,41 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.google.gson.JsonObject;
 import com.spring.biz.board.BoardService;
 import com.spring.biz.board.MovieBoardVO;
+import com.spring.biz.userInfo.UserInfoService;
+import com.spring.biz.userInfo.UserInfoVO;
 
 @Controller
-
 public class CkController {
 	@Autowired
 	BoardService bo;
-	@RequestMapping(value = "testinsert.do")
+	@Autowired
+	UserInfoService userinfoService;
+	@RequestMapping(value = "/testinsert.do")
 	public String insertBoard(@RequestParam(value = "content")String content,MovieBoardVO vo) {
 		vo.setContent(content);
 		bo.insertBoard(vo);
 		return null;
 	}
 	
-	@RequestMapping(value="fileupload.do", method=RequestMethod.POST)
+	@ResponseBody
+	@RequestMapping(value = "write.do")
+	public String writeDo(UserInfoVO vo,String UserId) {
+		if(vo.getUserId()=="") {
+			return "1";
+			
+		}else if(userinfoService.getUserInfo(vo).getReport().equals("Y")){
+			return "2";
+		}
+		return "testCk";
+	}
+	
+	@RequestMapping(value = "writeGo.do")
+	public String writeDoGo() {
+	
+		return "insertDash";
+	}
+	
+	@RequestMapping(value="/fileupload.do", method=RequestMethod.POST)
 	@ResponseBody
 	public String fileUpload(HttpServletRequest req, HttpServletResponse resp, 
                  MultipartHttpServletRequest multiFile) throws Exception {
@@ -54,7 +75,7 @@ public class CkController {
 					try{
 						String fileName = file.getName();
 						byte[] bytes = file.getBytes();
-						String uploadPath = req.getServletContext().getRealPath("/img");
+						String uploadPath = "C:\\upload";
 						System.out.println(uploadPath);
 						File uploadFile = new File(uploadPath);
 						if(!uploadFile.exists()){
@@ -67,7 +88,7 @@ public class CkController {
                         
                         printWriter = resp.getWriter();
                         resp.setContentType("text/html");
-                        String fileUrl = req.getContextPath() + "/img/" + fileName;
+                        String fileUrl = "/upload/" + fileName;
                         
                         // json 데이터로 등록
                         // {"uploaded" : 1, "fileName" : "test.jpg", "url" : "/img/test.jpg"}
@@ -75,7 +96,7 @@ public class CkController {
                         json.addProperty("uploaded", 1);
                         json.addProperty("fileName", fileName);
                         json.addProperty("url", fileUrl);
-                        
+                        System.out.println(fileUrl);
                         printWriter.println(json);
                     }catch(IOException e){
                         e.printStackTrace();

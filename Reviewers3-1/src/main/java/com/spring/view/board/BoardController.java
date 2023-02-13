@@ -37,7 +37,7 @@ import com.spring.biz.userInfo.UserInfoVO;
 
 
 @Controller
-@SessionAttributes({"User","UserInfo"})
+@SessionAttributes({"User","UserInfo","board"})
 public class BoardController {
 	
 	@Autowired

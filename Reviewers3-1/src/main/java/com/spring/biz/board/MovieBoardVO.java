@@ -1,6 +1,7 @@
 package com.spring.biz.board;
 
 import java.sql.Date;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponents;
@@ -16,19 +17,81 @@ public class MovieBoardVO {
 	private String nickname;
 	private String content;
 	private String filename;
-	private Date writedate;
+	private String writedate;
 	private int like_num;
 	private int unlike_num;
 	private int cnt;
 	private String userId;
+	private String writdate;
 	private MultipartFile uploadFile;
+	private int moviecode;
 	private int pageNum;
 	private int amount;
 	private String searchCondition;
 	private String searchKeyword;
+	private List<String> tags;
+	private String contentType;
 
 	
 	
+	public String getContentType() {
+		return contentType;
+	}
+
+
+
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+
+
+
+	public List<String> getTags() {
+		return tags;
+	}
+
+
+
+
+	public void setTags(List<String> tags) {
+		this.tags = tags;
+	}
+
+
+
+
+	public int getMoviecode() {
+		return moviecode;
+	}
+
+
+
+
+	public void setMoviecode(int moviecode) {
+		this.moviecode = moviecode;
+	}
+
+
+
+
+	private String report;
+	
+	public String getReport() {
+		return report;
+	}
+
+
+
+
+	public void setReport(String report) {
+		this.report = report;
+	}
+
+
+
+
 	public MovieBoardVO() {
 		this.pageNum = 1;
 		this.amount = 15;
@@ -39,6 +102,20 @@ public class MovieBoardVO {
 	
 	
 	
+	public String getWritdate() {
+		return writdate;
+	}
+
+
+
+
+	public void setWritdate(String writdate) {
+		this.writdate = writdate;
+	}
+
+
+
+
 	public int getBseq() {
 		return bseq;
 	}
@@ -123,19 +200,14 @@ public class MovieBoardVO {
 
 
 
-
-
-
-
-
-	public Date getWritedate() {
+	public String getWritedate() {
 		return writedate;
 	}
 
 
 
 
-	public void setWritedate(Date writedate) {
+	public void setWritedate(String writedate) {
 		this.writedate = writedate;
 	}
 
@@ -278,9 +350,4 @@ public class MovieBoardVO {
 				.build();
 		
 		return uriComponents.toUriString();
-	}
-	
-	
-	
-	
-}
+	}}

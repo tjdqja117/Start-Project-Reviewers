@@ -57,7 +57,7 @@ public class adminControler {
 				model.addAttribute("boardList", reviewService.getBoardListWithDynamicPaging(cri));	// Model 정보 저장
 				System.out.println("error2");
 //				model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
-				System.out.println(reviewService.getBoardListWithDynamicPaging(cri).get(0).getReportSeq());
+//				System.out.println(reviewService.getBoardListWithDynamicPaging(cri).get(0).getReportSeq());
 		return "admin";
 	}
 	
@@ -103,9 +103,9 @@ public class adminControler {
 	        out.println("<script>alert('이미 신고한 게시물입니다');  history.go(-1);</script>");
 	        out.flush();
 		}
-		return "index.jsp";
+		return "index";
 	}
-	@RequestMapping(value = "/inertCommentReport.do")
+	@RequestMapping(value = "/insertCommentReport.do")
 	public String insertCommentReport(reportCommentVO vo,HttpServletResponse response) throws IOException {
 		if(commentService.getValid(vo)==0) {
 			commentService.intsertRePortComment(vo);
@@ -120,7 +120,7 @@ public class adminControler {
 	        out.println("<script>alert('이미 신고한 게시물입니다');  history.go(-1);</script>");
 	        out.flush();
 		}
-		return "index.jsp";
+		return "index";
 	}
 	@RequestMapping(value = "/updateReportReview.do")
 	public String updateReportReview(ReportReviewVO vo,HttpServletResponse response,UserInfoVO Ivo,UserBlackListVO Bvo,MovieBoardVO Mvo) {
@@ -261,6 +261,12 @@ public class adminControler {
 		}
 	
 		return "redirect:reportComment.do";
+	}
+	
+	@RequestMapping(value ="/testReport.do")
+	public String InsertReport() {
+		
+		return "testInsertReport";
 	}
 	
 }
