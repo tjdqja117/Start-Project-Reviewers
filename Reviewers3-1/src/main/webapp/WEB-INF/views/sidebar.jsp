@@ -35,11 +35,13 @@
   <link href="<c:url value="/resources/assets/vendor/quill/quill.snow.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/quill/quill.bubble.css"/>" rel="stylesheet">
   <link href="<c:url value="/resources/assets/vendor/remixicon/remixicon.css"/>" rel="stylesheet">
-  <link href="<c:url value="/resources/sujin.css"/>" rel="stylesheet"> 
+  <script type="text/javascript" src="/resources/InsertAuthority.js"></script>
+  <link href="<c:url value="/resources/sujin.css"/>" rel="stylesheet">
   
   
   <!-- Template Main CSS File -->
   <link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
+	<link href="<c:url value="/resources/assets/css/style.css"/>" rel="stylesheet">
   <!-- JS LINK -->
  	<script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
  	<link href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" >
@@ -451,6 +453,7 @@ border-radius: 15px;
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
+            <input type="hidden" id="UserId" value="${User.userId }">
               <h6>${User.userId }</h6>
               <span>${UserInfo.nickname }</span>
             </li>
@@ -698,5 +701,38 @@ border-radius: 15px;
   
    <script src="<c:url value="/resources/assets/js/main.js"/>"></script>
    <script src="<c:url value="/resources/assets/js/autoComplete.js"/>"></script>
+   
+   <main id="main" class="main">
+   		<!-- Modal -->
+               <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                     <div class="modal-content">
+                        <div class="modal-body">
+                           <div class="member">
+                              <form action="login.do" method="post">
+                                 <h2>#REVIEWERS</h2>
+                                 <h1>로그인</h1>
+                                 <div class="field">
+                                    <b>아이디</b> <span class="placehold-text"><input type="text" id="UserId" name="UserId"></span>
+                                 </div>
+                                 <div class="field">
+                                    <b>비밀번호</b> <input class="userpw" type="password" id="password" name="password">
+                                 </div>
+                                 <input type="submit" value="로그인">
+                                 <div class="member-footer">
+ <hr>
+                                    <div>
+                                       <a href="sign_up.jsp">회원가입</a> <a href="findId.do">아이디 찾기</a><a href="updatePasswordGo.do">비밀번호 찾기</a>
+                                    </div>
+                                 </div>
+                              </form>
+                           </div>
+
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+   </main>
    </body>
    </html>

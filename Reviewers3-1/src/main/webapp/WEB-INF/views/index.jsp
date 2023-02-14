@@ -59,7 +59,9 @@
   		</c:otherwise>
   </c:choose>
   <div>
+  <!-- 
     <button onClick="location.href='getReviewReport.do'" class="custom-btn btn-1">관리자 페이지</button>
+   -->
     <div class="slider">
    	  <c:forEach var="release_date" begin="0" end="19" step="1" items="${release_date}">
      	<div><img src="${release_date.poster_path }" onClick="location.href='ContentsDetail.do?type=${release_date.contents_type }&id=${release_date.contents_num }'">

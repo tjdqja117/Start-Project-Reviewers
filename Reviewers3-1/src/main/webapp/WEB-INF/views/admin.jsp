@@ -57,6 +57,7 @@
   
   
    <main id="main" class="main" style="text-align: center;">
+   
    <h1>신고된 전체 리뷰</h1>
 <div id = "reportTable">
 	

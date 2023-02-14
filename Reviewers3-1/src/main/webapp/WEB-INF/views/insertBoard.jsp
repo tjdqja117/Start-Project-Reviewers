@@ -174,7 +174,8 @@
 
 
 
-	<main id="main" class="main"> <!-- Modal -->
+	<main id="main" class="main">
+	 <!-- Modal -->
 	<div class="modal fade" id="exampleModalCenter" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalCenterTitle"
 		aria-hidden="true">
@@ -214,7 +215,7 @@
 	<!-- 글 작성 폼 -->
 	<div class="container">
 		<div class="title">글쓰기</div>
-	<form action="insertBoard.do" method="post">
+	<form action="insertBoard.do?boardnum=4" method="post">
 		
 	<input type = "hidden" id = "nickname" name="nickname" value = "${UserInfo.nickname }">
  	<input type="hidden" id = "userId" name="userId" value = "${User.userId }">
@@ -225,7 +226,7 @@
 			</div>
 			<div class="search-bar">
 				<div>리뷰할 콘텐츠</div>
-				<input type="hidden" id="moviecode" name="moviecode">
+				<input type="hidden" id="moviecode" name="moviecode" value="0">
 				     <input type="search" id="autocomplete" name="searchKeyword" aria-label="Search">
 				<select id="Search" name="SC">
 					<option value="none">--선택--</option>
@@ -244,7 +245,7 @@
 				<textarea id="content" name="content"></textarea>
 			</div>
 			<div class="form-btn-wrap">
-				<button class="form-cancel-btn" type="submit">취소</button>
+				<input type = "button" onclick='history.back(-1);' value = "취소" class="form-cancel-btn">'
 				<button class="form-submit-btn" type="submit">글쓰기</button>
 			</div>
 		</form>

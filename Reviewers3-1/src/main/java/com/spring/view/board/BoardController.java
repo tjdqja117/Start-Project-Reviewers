@@ -31,8 +31,12 @@ import com.spring.biz.board.PageDTO;
 import com.spring.biz.board.SearchCriteria;
 import com.spring.biz.hashTag.HashTagService;
 import com.spring.biz.hashTag.HashTagVO;
+import com.spring.biz.movieGeners.MovieGenersService;
+import com.spring.biz.movieGeners.MovieGenersVO;
 import com.spring.biz.user.UserVO;
 import com.spring.biz.userInfo.UserInfoVO;
+import com.spring.biz.util.getContentInfo;
+import com.spring.biz.util.getMovie_geners;
 
 
 
@@ -44,11 +48,16 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private HashTagService hashtagService;
+	@Autowired
+	private MovieGenersService MovieGenersService;
+	
 	
 	
 	// 글 등록
 		@RequestMapping(value="insertBoard.do")
-		public String insertBoard(MovieBoardVO vo,String basic,HashTagVO Hvo,@RequestParam(value="SC") String code) throws IOException {
+		public String insertBoard(MovieGenersVO Gvo,MovieBoardVO vo,String basic,HashTagVO Hvo,@RequestParam(value="SC") String code, int moviecode) throws IOException {			
+			getMovie_geners getGeners = new getMovie_geners();
+			
 			int seq = boardService.getSeq();
 			int num;
 			if(code.equals("movie")) {
@@ -63,6 +72,7 @@ public class BoardController {
 			vo.setBoardnum(num);
 			vo.setBseq(seq);
 			Hvo.setBseq(seq);
+			System.out.println(basic);
 			try {
 				if(basic != null) {
 				JSONArray arr = new JSONArray(basic);
@@ -75,13 +85,25 @@ public class BoardController {
 						System.out.println(list[i]);
 						Hvo.setHashtag(list[i]);
 						hashtagService.insertHashTag(Hvo);
-					}
+					}	
 				}
 				System.out.println(list);
 				}
+				
+				
 			} catch (JSONException e) {
 				 e.printStackTrace();
 				
+			}
+			
+			List<String> list = getGeners.get_geners(code,moviecode);
+			for(int i = 0;i<list.size();i++) {
+				Gvo.setMovieGeners(list.get(i));
+				if(MovieGenersService.validMovieGeners(Gvo) == null) {
+					MovieGenersService.insertGeners(Gvo);
+				}else {
+					MovieGenersService.updateGeners(Gvo);
+				}
 			}
 			System.out.println(vo.getBseq());
 			System.out.println(vo.getBoardnum());
@@ -89,11 +111,14 @@ public class BoardController {
 			System.out.println(vo.getTitle());
 			System.out.println(vo.getNickname());
 			System.out.println(vo.getUserId());
+			System.out.println(vo.getFilename());
 
 			
 			boardService.insertBoard(vo);
-			return "redirect:getBoardList.do?boardnum=4";
+			return "redirect:getBoardList.do?boardnum=" + num;
 		}
+			
+	
 
 	// 글 수정
 	@RequestMapping(value="updateBoard.do")
@@ -139,9 +164,16 @@ public class BoardController {
 
 	// 글 상세 조회
 	@RequestMapping(value="/getBoard.do")
-	public String getBoard(MovieBoardVO vo, Model model, UserVO uvo,HttpServletRequest request, CntHistoryVO cvo) {
+	public String getBoard(MovieBoardVO vo, Model model, UserVO uvo,HttpServletRequest request, CntHistoryVO cvo,HashTagVO Hvo) {
 		System.out.println("글 상세 조회 처리");
 		HttpSession session = request.getSession();
+		MovieBoardVO result = boardService.getBoard(vo);
+		
+		getContentInfo info = new getContentInfo();
+		if(result.getMoviecode()!=0) {
+			model.addAttribute("info",info.getjsonObjectInfo(result.getContentType(), result.getMoviecode()));	
+		}
+		
 		if((UserVO) session.getAttribute("User") != null) {			
 			uvo = (UserVO) session.getAttribute("User");
 			System.out.println(uvo.getUserId());
@@ -153,6 +185,7 @@ public class BoardController {
 				boardService.updateCnt(vo);
 			}
 		}
+		
 
 	
 		
@@ -168,6 +201,8 @@ public class BoardController {
 		
 	
 		// 검색 결과를 세션에 저장하고 목록 화면으로 이동한다.
+		Hvo.setBseq(vo.getBseq());
+		model.addAttribute("hashTag", hashtagService.getHashTag(Hvo));
 		model.addAttribute("board", boardService.getBoard(vo));
 		
 		

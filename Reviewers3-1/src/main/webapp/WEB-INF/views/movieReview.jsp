@@ -118,7 +118,7 @@
 	});
 </script>
 
-<button class="custom-btn btn-1" onClick="location.href='insertboardgo.do'">리뷰 작성</button>
+<button class="custom-btn btn-1" onClick="location.href='#'" id="write">리뷰 작성</button>
                 </main><!-- End #main -->
 
 

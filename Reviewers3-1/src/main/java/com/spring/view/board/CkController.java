@@ -58,7 +58,7 @@ public class CkController {
 	@RequestMapping(value = "writeGo.do")
 	public String writeDoGo() {
 	
-		return "insertDash";
+		return "insertBoard";
 	}
 	
 	@RequestMapping(value="/fileupload.do", method=RequestMethod.POST)

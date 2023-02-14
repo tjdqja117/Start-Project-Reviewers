@@ -73,8 +73,8 @@
 			   </c:forEach>
 			                </tbody>
 			            </table>
-<button type="button" class="custom-btn btn-1" style="float:inline; margin-right:3px; margin-top:20px;" onClick="location.href='insertboardgo.do'"">글쓰기</button>
-<button type="button" class="custom-btn btn-1" style="float:inline; margin-top:3px;" onClick="location.href='getBoardQList.do'">글목록</button>
+<button type="button" class="custom-btn btn-1" style="float:inline; margin-right:3px; margin-top:20px;" onClick="location.href='#'" id="write">글쓰기</button>
+
         </div>
     </div>
   
