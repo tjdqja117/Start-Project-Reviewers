@@ -47,8 +47,6 @@
                      </div>
                   </div>
                </div>
-
-
  
  <div class="css-1gkas1x-Grid e1689zdh0">
  	<div class="css-1y901a1-Row emmoxnt0">
@@ -58,7 +56,7 @@
  				<a title="${board.title }" href="getBoard.do?bseq=${board.bseq }">
  					<div class="css-1qmeemv">
  						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
- 							<img src="<c:url value="/resources/images/${board.filename }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
+ 							<img src="${board.reviewPic }" class="css-qhzw1o-StyledImg ezcopuc1">
  						</div>
  					</div>
  					<div class="css-ixy093">
@@ -125,7 +123,7 @@
                 
               
               
-<c:import url="footer.jsp"></c:import>
+		<c:import url="footer.jsp"></c:import>
   
   
   

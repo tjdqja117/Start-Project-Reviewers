@@ -16,13 +16,15 @@
 		<result property="unlike_num" column="UNLIKE_NUM"/>
 		<result property="cnt" column="CNT"/>
 		<result property="userId" column="USERID"/>
+		<result property="moviecode" column="MOVIECODE"/>
+		<result property="contentType" column="CONTENTTYPE"/>
 		
 	</resultMap>
 
 	<insert id="insertBoard">
-		 <![CDATA[INSERT INTO  reviewboard(bseq, boardnum, title, nickname,  content, filename, like_num, unlike_num, cnt, UserId,writedate)
+		 <![CDATA[INSERT INTO  reviewboard(bseq, boardnum, title, nickname,  content, filename, like_num, unlike_num, cnt, UserId,writedate, moviecode, contenttype)
 		VALUES (#{bseq}, #{boardnum}, #{title},#{nickname}, #{content},null
-		, 0, 0, 0, #{userId},sysdate)]]>	
+		, 0, 0, 0, #{userId},sysdate, #{moviecode}, #{contentType}) ]]>	
 	</insert>
 	
 	<update id="updateBoard">
@@ -75,7 +77,7 @@
 	<select id="getBoardList" resultMap="boardResult">
 		SELECT * 
 		FROM(
-			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,WRITEDATE, FILENAME, LIKE_NUM, UNLIKE_NUM, CNT, USERID 
+			SELECT ROWNUM RN, BSEQ, BOARDNUM, TITLE, NICKNAME, CONTENT,WRITEDATE, FILENAME, LIKE_NUM, UNLIKE_NUM, CNT, USERID, MOVIECODE, CONTENTTYPE
 			FROM(
 				SELECT * 
 				FROM REVIEWBOARD 

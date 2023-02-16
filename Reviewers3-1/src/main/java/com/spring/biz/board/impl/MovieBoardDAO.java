@@ -63,10 +63,10 @@ public class MovieBoardDAO {
 		return mybatis.selectList("MovieBoardDAO.getBoardList", vo);
 	}
 	
-	public List<MovieBoardVO> getBoardListMain(SearchCriteria cri){
+	public List<MovieBoardVO> getBoardListMain(MovieBoardVO vo){
 		System.out.println("getBoardListMain 수행");
 		
-		return mybatis.selectList("MovieBoardDAO.getBoardListMain", cri);
+		return mybatis.selectList("MovieBoardDAO.getBoardListMain", vo);
 	}
 	
 	public int getTotalPages(MovieBoardVO vo) {

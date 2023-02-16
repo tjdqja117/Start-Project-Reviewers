@@ -37,7 +37,6 @@ import com.spring.biz.util.getContentInfo;
 import com.spring.biz.util.getInfoUtil;
 import com.spring.biz.util.getSearchUtil;
 
-
 @Controller
 public class MovieController {
 	
@@ -73,34 +72,47 @@ public class MovieController {
 	}
 	
 	@RequestMapping({"/", "testMovie.do"})
-	public String main(@RequestParam(value = "type", defaultValue = "movie") String contents_type, Model model, SearchCriteria cri) {
+	public String main(@RequestParam(value = "type", defaultValue = "movie") String contents_type, Model model, MovieBoardVO vo) {
 
 		// 영화 정보를 불러오는 클래스 (이전 글에서 설명한 데이터 파싱 전용 클래스)
 		getInfoUtil util = new getInfoUtil();
-        
+		getContentInfo info = new getContentInfo();
+		
 		List<ContentsVO> release_date = util.getInfoList(contents_type);
- 
+		List<MovieBoardVO> result = boardService.getBoardListMain(vo);
+		
+		for(int i=0; i<result.size();i++) {
+			if(result.get(i).getReviewPic()==null) {
+				int code = result.get(i).getMoviecode();
+				System.out.println(code);
+				String contentType= result.get(i).getContentType();
+				System.out.println(contentType);
+				String temp = info.getjsonObjectInfo(contentType, code).getPoster_path();
+				System.out.println(temp);
+				result.get(i).setReviewPic(temp);
+				System.out.println(result.get(i).getReviewPic());
+			}
+		}
+		
 		// List에 담긴 ContentsVO를 날짜 내림차순으로 정렬
 //		Collections.sort(release_date,new SortByDate());
 
 		
 		model.addAttribute("release_date", release_date); // 최신 공개 순
 		model.addAttribute("type", contents_type);
-		
-		
-		
-		if (cri.getSearchCondition() == null) {
-			cri.setSearchCondition("TITLE");
+				
+		if (vo.getSearchCondition() == null) {
+			vo.setSearchCondition("TITLE");
 		}
-		if (cri.getSearchKeyword() == null) {
-			cri.setSearchKeyword("");
+		if (vo.getSearchKeyword() == null) {
+			vo.setSearchKeyword("");
 		}
 		
 //		System.out.println("TotalPage : " + pageMaker.getTotalPage());
 //		System.out.println("StartPage : " + pageMaker.getStartPage());
 //		System.out.println("EndPage : " + pageMaker.getEndPage());
 		
-		model.addAttribute("boardList", boardService.getBoardListMain(cri));	// Model 정보 저장
+		model.addAttribute("boardList", result);	// Model 정보 저장
 //		model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
 		
 		return "index";

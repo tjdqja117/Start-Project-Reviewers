@@ -74,6 +74,7 @@ public class BoardController {
 			vo.setBoardnum(num);
 			vo.setBseq(seq);
 			Hvo.setBseq(seq);
+			vo.setContentType(code);
 			System.out.println(basic);
 			try {
 				if(basic != null) {
@@ -107,6 +108,7 @@ public class BoardController {
 					MovieGenersService.updateGeners(Gvo);
 				}
 			}
+			System.out.println("확인");
 			System.out.println(vo.getBseq());
 			System.out.println(vo.getBoardnum());
 			System.out.println(vo.getContent());
@@ -114,6 +116,8 @@ public class BoardController {
 			System.out.println(vo.getNickname());
 			System.out.println(vo.getUserId());
 			System.out.println(vo.getFilename());
+			System.out.println(vo.getContentType());
+			System.out.println(vo.getMoviecode());
 
 			
 			boardService.insertBoard(vo);
@@ -283,10 +287,11 @@ public class BoardController {
 
 	// 글 목록 검색
 	@RequestMapping(value="getBoardList.do")
-	public String getBoardList(Model model,@RequestParam(value="boardnum") int num, MovieBoardVO vo) {
+	public String getBoardList(Model model,@RequestParam(value="boardnum") int num, MovieBoardVO vo, HashTagVO Hvo) {
 		vo.setBoardnum(num);
 		System.out.println(num);
 		
+		getContentInfo info = new getContentInfo();
 		
 		// NULL Check
 				if (vo.getSearchCondition() == null) {
@@ -296,11 +301,41 @@ public class BoardController {
 					vo.setSearchKeyword("");
 				}
 				
+				
+				
 				// Model 정보 저장
 				PageDTO pageMaker = new PageDTO(vo, boardService.getTotalPages(vo));
 				
+				List<MovieBoardVO> result = boardService.getBoardList(vo);
+				
+				for(int i = 0;i<result.size();i++) {
+					Hvo.setBseq(result.get(i).getBseq());
+					if(hashtagService.getHashTag(Hvo)!=null) {
+						System.out.println(Hvo.getBseq());
+					List<HashTagVO> hashList = hashtagService.getHashTag(Hvo);
+					List<String> tempList = new ArrayList<String>();
+					for(int x = 0;x<hashList.size();x++) {
+						
+						String temp = hashList.get(x).getTags();
+						tempList.add(temp);
+					}
+					result.get(i).setTags(tempList);
+					}
+					
+					if(result.get(i).getReviewPic() == null) {
+						int code = result.get(i).getMoviecode();
+						System.out.println(code);
+						String contentType= result.get(i).getContentType();
+						System.out.println(contentType);
+						String temp = info.getjsonObjectInfo(contentType, code).getPoster_path();
+						System.out.println(temp);
+						result.get(i).setReviewPic(temp);
+						System.out.println(result.get(i).getReviewPic());
+					}
+					
+				}
 				model.addAttribute("pageMaker", pageMaker);	// Model 정보 저장
-				model.addAttribute("boardList", boardService.getBoardList(vo));	// Model 정보 저장
+				model.addAttribute("boardList", result);	// Model 정보 저장
 				model.addAttribute("boardnum", vo.getBoardnum());
 				if(num == 4) {
 					return "community";

@@ -79,7 +79,7 @@
  					<a title="${board.title }" href="getBoard.do?bseq=${board.bseq }">
  						<div class="css-1qmeemv">
  							<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
- 								<img src="<c:url value="/resources/images/${board.filename }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
+ 								<img src="<c:url value="${board.reviewPic }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
  							</div>
  						</div>
  						<div class="css-ixy093">

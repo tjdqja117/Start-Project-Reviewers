@@ -79,9 +79,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<MovieBoardVO> getBoardListMain(SearchCriteria cri) {
+	public List<MovieBoardVO> getBoardListMain(MovieBoardVO vo) {
 		
-		return boardDAO.getBoardListMain(cri);
+		return boardDAO.getBoardListMain(vo);
 	}
 
 	@Override

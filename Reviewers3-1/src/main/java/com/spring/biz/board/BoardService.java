@@ -29,7 +29,7 @@ public interface BoardService {
 	void updateCnt(MovieBoardVO vo);
 	
 	// 메인페이지 인기 리뷰
-	List<MovieBoardVO> getBoardListMain(SearchCriteria cri);
+	List<MovieBoardVO> getBoardListMain(MovieBoardVO vo);
 	
 	int getSeq();
 	

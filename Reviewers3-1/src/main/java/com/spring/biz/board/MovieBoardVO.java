@@ -30,10 +30,29 @@ public class MovieBoardVO {
 	private String searchCondition;
 	private String searchKeyword;
 	private List<String> tags;
-	private String contentType;
+	private String contentType;	
+	private String reviewPic;
+	
+	
 
 	
 	
+	
+	
+	public String getReviewPic() {
+		return reviewPic;
+	}
+
+
+
+
+	public void setReviewPic(String reviewPic) {
+		this.reviewPic = reviewPic;
+	}
+
+
+
+
 	public String getContentType() {
 		return contentType;
 	}
