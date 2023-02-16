@@ -229,8 +229,8 @@
 				<input type="hidden" id="moviecode" name="moviecode" value="0">
 				     <input type="search" id="autocomplete" name="searchKeyword" aria-label="Search">
 				<select id="Search" name="SC">
-					<option value="none">--선택--</option>
-					<option value="movie" selected>영화 리뷰</option>
+					<option value="none" selected>--선택--</option>
+					<option value="movie">영화 리뷰</option>
 					<option value="tv">TV 프로그램 리뷰</option>
 					<option value="webtoon">웹툰 리뷰</option>
 					<option value="community">자유게시판 글작성</option>
@@ -245,7 +245,7 @@
 				<textarea id="content" name="content"></textarea>
 			</div>
 			<div class="form-btn-wrap">
-				<input type = "button" onclick='history.back(-1);' value = "취소" class="form-cancel-btn">'
+				<input type = "button" onclick='history.back(-1);' value = "취소" class="form-cancel-btn">
 				<button class="form-submit-btn" type="submit">글쓰기</button>
 			</div>
 		</form>

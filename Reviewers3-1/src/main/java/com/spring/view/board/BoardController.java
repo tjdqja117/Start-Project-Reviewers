@@ -3,6 +3,8 @@ package com.spring.view.board;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,7 +85,7 @@ public class BoardController {
 					for(int i = 0;i<len;i++) {
 						list[i] = arr.getJSONObject(i).getString("value");
 						System.out.println(list[i]);
-						Hvo.setHashtag(list[i]);
+						Hvo.setTags(list[i]);
 						hashtagService.insertHashTag(Hvo);
 					}	
 				}
@@ -121,29 +123,100 @@ public class BoardController {
 	
 
 	// 글 수정
-	@RequestMapping(value="updateBoard.do")
-	public String updateBoard(@ModelAttribute("board") MovieBoardVO vo, 
-			@ModelAttribute("cri") SearchCriteria cri) {
+		@RequestMapping(value="updateBoard.do")
+		public String updateBoard( MovieBoardVO vo,	@RequestParam(value="SC") String code,String basic,HashTagVO Hvo,SearchCriteria cri) {
+			int num;
+			if(code.equals("movie")) {
+				num=1;
+			}else if(code.equals("tv")){
+				num=2;
+			}else if(code.equals("webtoon")) {
+				num=3;
+			}else {
+				num=4;
+			}
+			System.out.println(code);
+			System.out.println(num);
+			vo.setContentType(code);
+			vo.setBoardnum(num);
+			System.out.println(vo.getBseq());
+			System.out.println("글 수정 처리");
+//			logger.debug("[LOG] 글 수정 처리");
+			if(basic != null) {
+				try {
+					Hvo.setBseq(vo.getBseq());
+					System.out.println(vo.getBseq());
+					JSONArray arr = new JSONArray(basic);
+					String[] list = null;
+					int len = arr.length();
+					if(arr!=null) {
+						list = new String[len];
+						for(int i = 0;i<len;i++) {
+							list[i] = arr.getJSONObject(i).getString("value");
+							System.out.println(list[i]);
+							Hvo.setTags(list[i]);
+							hashtagService.updateHashTag(Hvo);
+							System.out.println(1);
+							hashtagService.insertHashTag(Hvo);
+						}
+					}
+					System.out.println(list);
+					}
+				 catch (JSONException e) {
+					 e.printStackTrace();
+					
+				}
+				
+				}
+			
+			
+			boardService.updateBoard(vo);
 
-		System.out.println("글 수정 처리");
-//		logger.debug("[LOG] 글 수정 처리");
+//			System.out.println("query : " + cri.makeQuery());
+			return "redirect:getBoardList.do?boardnum=" + num;
+		}
+	
+	@RequestMapping(value="/getUpdate.do")
+	public String getUpdate(MovieBoardVO vo, Model model,HashTagVO Hvo) throws ParseException {
 
-		boardService.updateBoard(vo);
-
-//		System.out.println("query : " + cri.makeQuery());
-		return "redirect:getBoardList.do"+ cri.makeQuery();
+		System.out.println("글 업데이트 처리");
+//		logger.debug("[LOG] 글 상세 조회 처리");
+		System.out.println(vo.getBseq());
+		MovieBoardVO result = boardService.getBoard(vo);
+		getContentInfo info = new getContentInfo();
+		if(result.getMoviecode()!=0) {
+			model.addAttribute("info",info.getjsonObjectInfo(result.getContentType(), result.getMoviecode()));	
+		}
+		List<String> hash = new ArrayList<String>();
+		if(hashtagService.getHashTag(Hvo)!=null) {
+			List<HashTagVO> list = hashtagService.getHashTag(Hvo);
+			for(int i = 0;i<list.size();i++) {
+				String str = list.get(i).getTags();
+				
+				hash.add(str);
+			}
+		}
+		
+		// 검색 결과를 세션에 저장하고 목록 화면으로 이동한다.
+		Hvo.setBseq(vo.getBseq());
+		model.addAttribute("board",result );
+		model.addAttribute("hashTag",hash);
+		return "updateReview";
 	}
+	
 
 	// 글 삭제
 	@RequestMapping(value="deleteBoard.do")
-	public String deleteBoard(@ModelAttribute("board") MovieBoardVO vo, 
-			@ModelAttribute("cri") SearchCriteria cri) {
-
+	public String deleteBoard(MovieBoardVO vo, @RequestParam(value="deletenum") int num, Model model) {
+		
+		
 		System.out.println("글 삭제 처리");
+		System.out.println(num);
 //		logger.debug("[LOG] 글 삭제  처리");
 		boardService.deleteBoard(vo);
 		
-		return "redirect:getBoardList.do"+ cri.makeQuery();
+		
+		return "redirect:getBoardList.do?boardnum=" + num;
 	}
 	
 	// 검색 조건 목록 설정
@@ -168,7 +241,6 @@ public class BoardController {
 		System.out.println("글 상세 조회 처리");
 		HttpSession session = request.getSession();
 		MovieBoardVO result = boardService.getBoard(vo);
-		
 		getContentInfo info = new getContentInfo();
 		if(result.getMoviecode()!=0) {
 			model.addAttribute("info",info.getjsonObjectInfo(result.getContentType(), result.getMoviecode()));	

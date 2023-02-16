@@ -76,7 +76,7 @@
     	<div class="slider">
     		<c:forEach items="${boardList }" var="board">
  				<li class="css-1hp6p72">
- 					<a title="${board.title }" href="#">
+ 					<a title="${board.title }" href="getBoard.do?bseq=${board.bseq }">
  						<div class="css-1qmeemv">
  							<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
  								<img src="<c:url value="/resources/images/${board.filename }"/>" class="css-qhzw1o-StyledImg ezcopuc1">

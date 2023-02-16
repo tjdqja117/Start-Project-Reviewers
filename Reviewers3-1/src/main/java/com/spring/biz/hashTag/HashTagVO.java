@@ -2,18 +2,18 @@ package com.spring.biz.hashTag;
 
 public class HashTagVO {
 	private int bseq;
-	private String hashtag;
+	private String tags;
 	public int getBseq() {
 		return bseq;
 	}
 	public void setBseq(int bseq) {
 		this.bseq = bseq;
 	}
-	public String getHashtag() {
-		return hashtag;
+	public String getTags() {
+		return tags;
 	}
-	public void setHashtag(String hashtag) {
-		this.hashtag = hashtag;
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 	
 }

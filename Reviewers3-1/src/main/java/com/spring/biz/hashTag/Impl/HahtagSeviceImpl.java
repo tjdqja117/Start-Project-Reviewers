@@ -21,7 +21,20 @@ public class HahtagSeviceImpl implements HashTagService{
 	@Override
 	public List<HashTagVO> getHashTag(HashTagVO vo) {
 		// TODO Auto-generated method stub
-		return null;
+		return hashtagDAO.getHashTag(vo);
+	}
+
+	@Override
+	public List<Integer> SearchHashTag(HashTagVO vo) {
+		// TODO Auto-generated method stub
+		return hashtagDAO.SearchHashTag(vo);
+	}
+
+	@Override
+	public void updateHashTag(HashTagVO vo) {
+		hashtagDAO.updateHash(vo);
+
+		
 	}
 
 }

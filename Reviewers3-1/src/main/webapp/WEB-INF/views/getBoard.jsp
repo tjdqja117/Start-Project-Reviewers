@@ -127,7 +127,7 @@
 						</div>
 					</div>
     	
-    	<div class="content-section" style ="min-height: 710px;;
+    	<div class="content-section" style ="min-height: 450px;
     height: auto;
     width: auto;
     	" >
@@ -136,97 +136,50 @@
     		<div class="barcenter">${board.writedate }</div>
     		<div class="barright">좋아요: ${board.like_num }&nbsp&nbsp조회수: ${board.cnt} </div>
     	</div>
-    		<div class="title">${board.title }<br>
+    		<div class="title">${board.title }
     		<a href = "ContentsDetail.do?type=${board.contentType }&id=${board.moviecode }">${info.title }</a>
-    		<br><br>
-    		<c:forEach items="${ hashTag}" var = "tag">
-    			<a href="HashTagSearch.do?tags=${tag.tags }" id = "hashtags">#${tag.tags }</a>
-    		</c:forEach>
+
+    		 	<c:forEach items="${info.genres}" var = "tag">
+    				<a href="HashTagSearch.do?tags=${tag }" id = "hashtags">${tag }</a>
+    			</c:forEach>
     		</div>
+    		<hr>    		
     		
-    	<div class="content">
+    	<div class="content" style="font-size:large;">
     		${board.content }
     	</div>
+    	<hr>
+    		<c:forEach items="${hashTag}" var = "tag">
+    			<a href="HashTagSearch.do?tags=${tag.tags }" id="hashtags" style="font-size:15px;">#${tag.tags }</a>
+    		</c:forEach>
     	</div>
     	
-   	<div class="topbar_link">
+   		<div class="topbar_link">
    		<div class="like">
     		<div class="heart"></div>
     		<div class="animation-heart"></div>    
     	</div>
    		<div style="margin-top:10px;">
    		<c:if test="${User.userId  eq board.userId }">
-   			<a href = "getUpdate.do?bseq=${board.bseq }">수정하기|</a>
+   			
+   			<form action="deleteBoard.do?bseq=${board.bseq }" method="POST">
+   				<input type="hidden" name="deletenum" id="deletenum" value="${board.boardnum }">
+   				<div>
+   				<input type="button" onClick="location.href='getUpdate.do?bseq=${board.bseq }'" value="수정하기"  class="custom-btn btn-1">
+   				<input type="submit" value="삭제하기 "  class="custom-btn btn-1">
+   				</div>
+   				<a href="#" onClick="history.back()">목록</a> <a href="#">|</a> <a href="#">댓글</a>
+   			</form>
 		</c:if>
-   			<a href="testMovie.do?type=movie">목록</a>|<a href="#">댓글</a>
    		</div>
    	</div>
+
     </main>
 
-<!-- 
-   <center>
-    <table>
-    <tr class="topbar">
-    	<td>작성자: ${board.nickname }</td>
-    	<td>${board.writedate }</td>
-    	<td></td>
-    	<td>조회수: ${board.cnt }</td>
-    </tr>
-    <tr class="topbar_link">
-    	<td colspan="4"><a href="#">목록</a>|<a href="#">댓글</a></td>
-    </tr>
-    <tr>
-    	<td style="font-size: 40px">${board.content }</td>
-    </tr>
-    <tr>
-    	<td> 
-    		<div class="heart"></div>
-    		<div class="animation-heart"></div>    		
-    	</td>
-    	 
-    </tr>
-    	
-    </table>
-    </center>
-<h1>글 상세</h1>
-<h3>${board.content}</h3>
-<form action="updateBoard.do" method="post">
-   <input name="bseq" type="hidden" value="${board.bseq}"><br>
-   <table border="1" cellpadding="0" cellspacing="0">
-      <tr>
-         <td bgcolor="#ce6d39" width="70">제목</td>
-         <td align="left"><input type="text" name="title" value="${board.title}"/></td>
-      </tr>
-      <tr>
-         <td bgcolor="#ce6d39" width="70">작성자</td>
-         <td align="left">${board.nickname} </td>
-      </tr>
-      <tr>
-         <td bgcolor="#ce6d39" width="70">내용</td>
-         <td align="left"></td>
-      </tr>
-      <tr>
-         <td bgcolor="#ce6d39" width="70">등록일</td>
-         <td align="left">${board.writedate }</td>
-      </tr>
-      <tr>
-         <td bgcolor="#ce6d39" width="70">조회수</td>
-         <td align="left">${board.cnt}</td>
-      </tr>
-      
-      <tr colspan="2" align="center">
-         <td><input type="submit" value="글 수정" class="btn2 btn-dark2"/></td>
-      </tr>
-      <a href="getBoardList.do?boardnum=4">
-      	<span>게시판으로</span>
-      </a>
-   </table>
-
-</form><br>
- -->
 	<c:import url="footer.jsp"></c:import>
    
    <!-- 좋아요 버튼 -->
    <script src="<c:url value="/resources/assets/js/likebutton.js"/>"></script>
+   	<link rel="stylesheet" href="<c:url value="/resources/assets/css/likebutton.css"/>">
 </body>
 </html>

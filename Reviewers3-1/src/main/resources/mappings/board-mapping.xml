@@ -29,7 +29,9 @@
 		<![CDATA[
 			UPDATE REVIEWBOARD SET
 				TITLE = #{title}, 
-				CONTENT = #{content} 
+				CONTENT = #{content},
+				moviecode=#{moviecode},
+				contentType = #{contentType}
 			WHERE BSEQ = #{bseq}
 		]]>
 	</update>
