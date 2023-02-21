@@ -62,12 +62,15 @@
       
       .content-section{
       	font-size:50px;
-      	width:90%;
+      	width:60%;
       	height:700px;
       	background-color: white;
       	box-sizing:border-box;
       	display:block;
       	padding:40px;
+       	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%);
+       	border-radius: 5px;
+       	position: relative;
       }
       
       .title{
@@ -82,13 +85,35 @@
       .topbar_link .like{
       	padding:20px;
       }
-      
+	.hash{
+    		font-size: 15px;
+    		position: absolute;
+    		bottom: 8px;
+    	}
+    	.divide{
+    		position:absolute;
+    		width: 90%;
+    		diplay:block;
+    		height: 50px;
+    		bottom:16px;
+    		border-top: 1px solid grey;
+    		padding:10px;
+    	}
+    	
+    		.divide2{
+
+    		width: 100%;
+    		height: 80px;
+    		border-bottom: 1px solid grey;
+    		padding:10px;
+    	}
+     
    </style>
   
 </head>
 
 <body>
-    <main id="main" class="main">
+    <main id="main" class="main" style="height:1000px;">
     	
     	<!-- Modal -->
 					<div class="modal fade" id="exampleModalCenter" tabindex="-1"
@@ -127,34 +152,39 @@
 						</div>
 					</div>
     	
-    	<div class="content-section" style ="min-height: 450px;
-    height: auto;
-    width: auto;
-    	" >
+    	<div class="content-section" style ="min-height: 450px; height: 90%; width: 1000px; margin:0 auto;" >   	
     	<div class="topbar">
     		<div class="barleft">작성자: ${board.nickname }</div>
     		<div class="barcenter">${board.writedate }</div>
-    		<div class="barright">좋아요: ${board.like_num }&nbsp&nbsp조회수: ${board.cnt} </div>
+    		<div class="barright">❤ ${board.like_num }&nbsp&nbsp👁‍🗨${board.cnt} </div>
     	</div>
-    		<div class="title">${board.title }
-    		<a href = "ContentsDetail.do?type=${board.contentType }&id=${board.moviecode }">${info.title }</a>
-
+		<div class="title">
+			${board.title } 
+    	</div>
+	<div class="divide2">
+		<div style="float:left;">
+			<a href = "ContentsDetail.do?type=${board.contentType }&id=${board.moviecode }" style="color:lightgray; font-size:x-large;">${info.title }</a>
+		</div>
+		<div style="float:right;">
     		 	<c:forEach items="${info.genres}" var = "tag">
-    				<a href="HashTagSearch.do?tags=${tag }" id = "hashtags">${tag }</a>
-    			</c:forEach>
-    		</div>
-    		<hr>    		
+    				<a href="HashTagSearch.do?tags=${tag }" id = "hashtags" style=" font-size:x-large;"> ${tag }</a>
+    			</c:forEach>	
+		</div>
+	</div>
+    	    		
     		
     	<div class="content" style="font-size:large;">
     		${board.content }
     	</div>
-    	<hr>
+    	
+    	<div class="divide">  	
     		<c:forEach items="${hashTag}" var = "tag">
-    			<a href="HashTagSearch.do?tags=${tag.tags }" id="hashtags" style="font-size:15px;">#${tag.tags }</a>
+    			<a href="HashTagSearch.do?tags=${tag.tags }" id="hashtags" class="hash">#${tag.tags }</a>
     		</c:forEach>
     	</div>
-    	
-   		<div class="topbar_link">
+    		</div>
+    	<c:if test="${User.userId eq true }">	</c:if>
+   		<div class="topbar_link" style="width: 1000px; margin:0 auto;">
    		<div class="like">
     		<div class="heart"></div>
     		<div class="animation-heart"></div>    
@@ -168,18 +198,19 @@
    				<input type="button" onClick="location.href='getUpdate.do?bseq=${board.bseq }'" value="수정하기"  class="custom-btn btn-1">
    				<input type="submit" value="삭제하기 "  class="custom-btn btn-1">
    				</div>
-   				<a href="#" onClick="history.back()">목록</a> <a href="#">|</a> <a href="#">댓글</a>
    			</form>
 		</c:if>
+   				<a href="#" onClick="history.back()">목록</a> <a href="#">|</a> <a href="#">댓글</a>
    		</div>
    	</div>
+    
 
     </main>
-
+	<br>
 	<c:import url="footer.jsp"></c:import>
    
    <!-- 좋아요 버튼 -->
    <script src="<c:url value="/resources/assets/js/likebutton.js"/>"></script>
    	<link rel="stylesheet" href="<c:url value="/resources/assets/css/likebutton.css"/>">
 </body>
-</html>
+</html> 		

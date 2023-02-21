@@ -7,7 +7,7 @@ $(document).ready(function() {
 		
 		sel = sc;
 		
-		if(e.target.value == "community"){
+		if(e.target.value == "community" || e.target.value == "webtoon"){
 			$("#autocomplete").attr('readonly',true);
 		}else{
 			$("#autocomplete").attr('readonly',false);

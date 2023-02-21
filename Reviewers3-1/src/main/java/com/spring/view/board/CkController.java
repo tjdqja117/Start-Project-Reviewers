@@ -75,7 +75,7 @@ public class CkController {
 					try{
 						String fileName = file.getName();
 						byte[] bytes = file.getBytes();
-						String uploadPath = "C:\\upload";
+						String uploadPath = "C:\\upload\\ck";
 						System.out.println(uploadPath);
 						File uploadFile = new File(uploadPath);
 						if(!uploadFile.exists()){
@@ -88,7 +88,7 @@ public class CkController {
                         
                         printWriter = resp.getWriter();
                         resp.setContentType("text/html");
-                        String fileUrl = "/upload/" + fileName;
+                        String fileUrl = "/upload/ck/" + fileName;
                         
                         // json 데이터로 등록
                         // {"uploaded" : 1, "fileName" : "test.jpg", "url" : "/img/test.jpg"}

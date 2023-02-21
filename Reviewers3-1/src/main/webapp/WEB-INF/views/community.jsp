@@ -48,27 +48,27 @@
 
                      </div>
                   </div>
-               </div>		
+               </div>		 
  	<div id="board-list">
         <div class="container">
             <table class="board-table">
                 <thead>
                 <tr>
-                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-date">등록일</th>
+                    <th scope="col" class="th-writer">작성자</th>
                     <th scope="col" class="th-title">제목</th>
-                    <th scope="col" class="th-date">작성자</th>
-                    <th scope="col" class="th-writer">등록일</th>
                     <th scope="col" class="th-cnt">조회수</th>
+                    <th scope="col" class="th-cnt">추천수</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach items="${boardList }" var="board">
 			   <tr>
-			      <td>${board.bseq }</td>
-			      <td align="left"><a href="getBoard.do?bseq=${board.bseq }">${board.title }</a></td>
-			      <td>${board.nickname }</td>
 			      <td>${board.writedate }</td>
-			      <td>${board.cnt }</td>		
+			      <td>${board.nickname }</td>
+			      <td align="left"><a href="getBoard.do?bseq=${board.bseq }">${board.title }</a></td>
+			      <td>${board.cnt }</td>	
+			      <td>${board.like_num }</td>	
 			   </tr>
 			   </c:forEach>
 			                </tbody>

@@ -63,11 +63,11 @@
 
 <body>
                 <!-- ======= Footer ======= -->
-  <footer id="footer" class="footer">
-    <div class="copyright">
+  <footer id="footer" class="footer" style="border-top:1px solid #FFC19E;">
+    <div class="copyright" style="color:coral">
       &copy; Welcome to the <strong><span>#Reviewers</span></strong>. All Rights Reserved
     </div>
-    <div class="credits">
+    <div class="credits" style="color:coral">
       <!-- All the links in the footer should remain intact. -->
       <!-- You can delete the links only if you purchased the pro version. -->
       <!-- Licensing information: https://bootstrapmade.com/license/ -->

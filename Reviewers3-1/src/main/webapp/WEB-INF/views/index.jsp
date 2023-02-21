@@ -59,9 +59,9 @@
   		</c:otherwise>
   </c:choose>
   <div>
-  <!-- 
+
     <button onClick="location.href='getReviewReport.do'" class="custom-btn btn-1">관리자 페이지</button>
-   -->
+
     <div class="slider">
    	  <c:forEach var="release_date" begin="0" end="19" step="1" items="${release_date}">
      	<div><img src="${release_date.poster_path }" onClick="location.href='ContentsDetail.do?type=${release_date.contents_type }&id=${release_date.contents_num }'">
@@ -78,10 +78,18 @@
  				<li class="css-1hp6p72">
  					<a title="${board.title }" href="getBoard.do?bseq=${board.bseq }">
  						<div class="css-1qmeemv">
- 							<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
- 								<img src="<c:url value="${board.reviewPic }"/>" class="css-qhzw1o-StyledImg ezcopuc1">
- 							</div>
+ 						<div class="css-1rdb949-StyledLazyLoadingImage ezcopuc0">
+ 						<c:choose>
+                   <c:when test="${board.filename != '2'}">
+                      <img alt="경호 확인 필요" src="${pageContext.servletContext.contextPath}/upload/thumbnail/${board.filename }" class="css-qhzw1o-StyledImg ezcopuc1">
+                      
+                   </c:when>
+                   <c:otherwise>
+ 							<img src="${board.reviewPic }" class="css-qhzw1o-StyledImg ezcopuc1">
+                   </c:otherwise>
+                   </c:choose>
  						</div>
+ 					</div>
  						<div class="css-ixy093">
  							<div class="css-niy0za">제목:${board.title }</div>
  								<div>

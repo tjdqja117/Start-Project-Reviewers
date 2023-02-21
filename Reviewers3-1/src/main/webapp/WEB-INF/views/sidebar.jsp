@@ -416,7 +416,6 @@ border-radius: 15px;
 		<option value="tv">TV</option>
 		<option value="review">리뷰</option>
 		<option value="tag">태그</option>
-		<option value="SearchId">아이디검색</option>
 	</select>
       </form>
 
@@ -536,11 +535,7 @@ border-radius: 15px;
               <i class="bi bi-circle"></i><span>인기 TV프로그램</span>
             </a>
           </li>
-          <li>
-            <a href="testMovie.do?type=webtoon">
-              <i class="bi bi-circle"></i><span>인기 웹툰</span>
-            </a>
-          </li>
+
         </ul>
       </li>
       <!-- End Dashboard Nav -->
@@ -702,7 +697,7 @@ border-radius: 15px;
    <script src="<c:url value="/resources/assets/js/main.js"/>"></script>
    <script src="<c:url value="/resources/assets/js/autoComplete.js"/>"></script>
    
-   <main id="main" class="main">
+
    		<!-- Modal -->
                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -733,6 +728,5 @@ border-radius: 15px;
                      </div>
                   </div>
                </div>
-   </main>
-   </body>
+     </body>
    </html>

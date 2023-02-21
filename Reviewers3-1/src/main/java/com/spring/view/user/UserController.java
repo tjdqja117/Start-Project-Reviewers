@@ -3,9 +3,12 @@ package com.spring.view.user;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mysql.fabric.Response;
 import com.spring.biz.user.UserService;
 import com.spring.biz.user.UserVO;
 import com.spring.biz.userInfo.UserInfoService;
@@ -43,7 +47,10 @@ public class UserController {
 	@RequestMapping(value = "/insertUser.do")
 	public String insertUser(UserVO vo,HttpServletResponse response,UserInfoVO Ivo) throws IOException {
 		System.out.println("회원가입");
-		
+		int age = vo.getBirth();
+		Calendar now = Calendar.getInstance();
+		age = now.get(Calendar.YEAR)-(age/10000);
+		vo.setBirth(age);
 		vo.setPassword(pwdEncoder.encode(vo.getPassword()));
 		userService.insertUser(vo);
 		System.out.println("error1");
@@ -53,20 +60,15 @@ public class UserController {
 		System.out.println("error2");
 		response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        out.println("<script>alert('회원가입이 완료되었습니다. 로그인을 해주세요');location.href='index.jsp'</script>");
+        out.println("<script>alert('회원가입이 완료되었습니다. 로그인을 해주세요');location.href='testMovie.do'</script>");
         out.flush();
-		return "redirect:index";
+		return "testMovie";
 	}
 	
 	@RequestMapping(value = "/login.do", method =RequestMethod.GET)
 	public String loginView(UserVO vo) {
 		System.out.println("로그인 화면으로 이동");
 		return "login.jsp";
-	}
-	
-	@RequestMapping(value="sign_up.do")
-	public String signup() {
-		return "sign_up";
 	}
 	@RequestMapping(value = "/login.do", method =RequestMethod.POST)
 	public String login(UserVO vo ,UserInfoVO Ivo ,Model model , HttpServletResponse response) throws IOException {
@@ -107,7 +109,7 @@ public class UserController {
         out.println("<script>alert('로그아웃되었습니다.');location.href='testMovie.do';</script>");
         out.flush();
 		// 2. 세션 종료후, 메인 화면으로 이동한다.
-		return "testMovie.do";
+		return "redirect:testMovie.do";
 
 	}
 
@@ -150,6 +152,7 @@ public class UserController {
 		
 		System.out.println(vo.getTel());
 		
+		
 		if(userService.telCheck(vo)!=null) {reuslt = 1;}else {reuslt = 0;}
 		System.out.println(reuslt);
 		return reuslt;
@@ -175,7 +178,7 @@ public class UserController {
 	public String findId(UserVO vo,Model model) {
 		UserVO User = userService.emailCheck(vo);
 		model.addAttribute("id",User.getUserId());
-		return "resultId.jsp";
+		return "resultId";
 	}
 	@ResponseBody
 	@RequestMapping(value="/findPassword.do")
@@ -204,55 +207,21 @@ public class UserController {
 		System.out.println(1);
 		response.setContentType("text/html; charset=UTF-8");
         PrintWriter out = response.getWriter();
-        out.println("<script>alert('비밀번호가 변경되었습니다 다시 로그인 해주세요.');location.href='index.jsp';</script>");
+        out.println("<script>alert('비밀번호가 변경되었습니다 다시 로그인 해주세요.');location.href='testMovie.do';</script>");
         System.out.println(2);
         out.flush();
-        return "result.jsp";
+        return "result";
 	}
-	@PostMapping("/upload_ok.do")
-	public String upload(@RequestParam("file") MultipartFile file ,UserInfoVO Ivo) {
-		String fileRealName = file.getOriginalFilename(); //파일명을 얻어낼 수 있는 메서드!
-		long size = file.getSize(); //파일 사이즈
-		
-		System.out.println("파일명 : "  + fileRealName);
-		System.out.println("용량크기(byte) : " + size);
-		//서버에 저장할 파일이름 fileextension으로 .jsp이런식의  확장자 명을 구함
-		String fileExtension = fileRealName.substring(fileRealName.lastIndexOf("."),fileRealName.length());
-		String uploadFolder = "C:\\Users\\jwpar\\Desktop\\Final_Project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp1\\wtpwebapps\\FinalProject\\resources\\UserProfile";
-		
-		
-		/*
-		  파일 업로드시 파일명이 동일한 파일이 이미 존재할 수도 있고 사용자가 
-		  업로드 하는 파일명이 언어 이외의 언어로 되어있을 수 있습니다. 
-		  타인어를 지원하지 않는 환경에서는 정산 동작이 되지 않습니다.(리눅스가 대표적인 예시)
-		  고유한 랜던 문자를 통해 db와 서버에 저장할 파일명을 새롭게 만들어 준다.
-		 */
-		
-		UUID uuid = UUID.randomUUID();
-		System.out.println(uuid.toString());
-		String[] uuids = uuid.toString().split("-");
-		
-		String uniqueName = uuids[0];
-		System.out.println("생성된 고유문자열" + uniqueName);
-		System.out.println("확장자명" + fileExtension);
-		System.out.println(uniqueName+fileExtension);
-		
-		
-		// File saveFile = new File(uploadFolder+"\\"+fileRealName); uuid 적용 전
-		
-		File saveFile = new File(uploadFolder+"\\"+uniqueName + fileExtension);  // 적용 후
-		try {
-			file.transferTo(saveFile); // 실제 파일 저장메서드(filewriter 작업을 손쉽게 한방에 처리해준다.)
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return "fileupload/upload_ok";
+	@RequestMapping(value = "/findIdgo.do")
+	public String findIdGo() {
+		return "findId";
 	}
-	@RequestMapping("/getAllUser.do")
-	public String getAllUser(UserVO vo,Model model) {
-		model.addAttribute("User",userService.getUserLIst(vo));
-		return "testList.jsp";
+	@RequestMapping(value = "/updatePasswordGo.do")
+	public String updatePasswordGo() {
+		return "updatePassword";
+	}
+	@RequestMapping(value = "sign_up.do")
+	public String sign_up() {
+		return "sign_up";
 	}
 }

@@ -55,74 +55,115 @@ public class BoardController {
 	
 	
 	
-	// 글 등록
-		@RequestMapping(value="insertBoard.do")
-		public String insertBoard(MovieGenersVO Gvo,MovieBoardVO vo,String basic,HashTagVO Hvo,@RequestParam(value="SC") String code, int moviecode) throws IOException {			
-			getMovie_geners getGeners = new getMovie_geners();
-			
-			int seq = boardService.getSeq();
-			int num;
-			if(code.equals("movie")) {
-				num=1;
-			}else if(code.equals("tv")){
-				num=2;
-			}else if(code.equals("webtoon")) {
-				num=3;
-			}else {
-				num=4;
-			}
-			vo.setBoardnum(num);
-			vo.setBseq(seq);
-			Hvo.setBseq(seq);
-			vo.setContentType(code);
-			System.out.println(basic);
-			try {
-				if(basic != null) {
-				JSONArray arr = new JSONArray(basic);
-				String[] list = null;
-				int len = arr.length();
-				if(arr!=null) {
-					list = new String[len];
-					for(int i = 0;i<len;i++) {
-						list[i] = arr.getJSONObject(i).getString("value");
-						System.out.println(list[i]);
-						Hvo.setTags(list[i]);
-						hashtagService.insertHashTag(Hvo);
-					}	
-				}
-				System.out.println(list);
-				}
-				
-				
-			} catch (JSONException e) {
-				 e.printStackTrace();
-				
-			}
-			
-			List<String> list = getGeners.get_geners(code,moviecode);
-			for(int i = 0;i<list.size();i++) {
-				Gvo.setMovieGeners(list.get(i));
-				if(MovieGenersService.validMovieGeners(Gvo) == null) {
-					MovieGenersService.insertGeners(Gvo);
-				}else {
-					MovieGenersService.updateGeners(Gvo);
-				}
-			}
-			System.out.println("확인");
-			System.out.println(vo.getBseq());
-			System.out.println(vo.getBoardnum());
-			System.out.println(vo.getContent());
-			System.out.println(vo.getTitle());
-			System.out.println(vo.getNickname());
-			System.out.println(vo.getUserId());
-			System.out.println(vo.getFilename());
-			System.out.println(vo.getContentType());
-			System.out.println(vo.getMoviecode());
-
-			
-			boardService.insertBoard(vo);
-			return "redirect:getBoardList.do?boardnum=" + num;
+	@RequestMapping(value="insertBoard.do")
+	public String insertBoard(MovieGenersVO Gvo,MovieBoardVO vo,String basic,HashTagVO Hvo,@RequestParam(value="SC") String code, int moviecode	,
+			@RequestParam(value="uploadFile") MultipartFile file, HttpSession session) throws IOException {			
+		getMovie_geners getGeners = new getMovie_geners();
+	
+		int seq = boardService.getSeq();
+		int num;
+		if(code.equals("movie")) {
+			num=1;
+		}else if(code.equals("tv")){
+			num=2;
+		}else if(code.equals("webtoon")) {
+			num=3;
+		}else {
+			num=4;
 		}
+		vo.setBoardnum(num);
+		vo.setBseq(seq);
+		Hvo.setBseq(seq);
+		vo.setContentType(code);
+		System.out.println(basic);
+		try {
+			if(basic != null) {
+			JSONArray arr = new JSONArray(basic);
+			String[] list = null;
+			int len = arr.length();
+			if(arr!=null) {
+				list = new String[len];
+				for(int i = 0;i<len;i++) {
+					list[i] = arr.getJSONObject(i).getString("value");
+					System.out.println(list[i]);
+					Hvo.setTags(list[i]);
+					hashtagService.insertHashTag(Hvo);
+				}	
+			}
+			System.out.println(list);
+			}
+			
+			
+		} catch (JSONException e) {
+			 e.printStackTrace();
+			
+		}
+		
+		List<String> list = getGeners.get_geners(code,moviecode);
+		for(int i = 0;i<list.size();i++) {
+			Gvo.setMovieGeners(list.get(i));
+			if(MovieGenersService.validMovieGeners(Gvo) == null) {
+				MovieGenersService.insertGeners(Gvo);
+			}else {
+				MovieGenersService.updateGeners(Gvo);
+			}
+		}
+
+		System.out.println(file.isEmpty());
+		System.out.println("확인");
+		System.out.println(vo.getBseq());
+		System.out.println(vo.getBoardnum());
+		System.out.println(vo.getContent());
+		System.out.println(vo.getTitle());
+		System.out.println(vo.getNickname());
+		System.out.println(vo.getUserId());
+		System.out.println(vo.getContentType());
+		System.out.println(vo.getMoviecode());
+		
+		// 파일을 넣으면
+		if(file.isEmpty() == false) {
+			try {
+				System.out.println(file);
+				String filename = fileUpload(file, session);
+				vo.setFilename(filename);
+				System.out.println(vo.getFilename());
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("파일 업로드 실패");
+			}
+		}else {
+			vo.setFilename("2");
+		}
+
+		
+		boardService.insertBoard(vo);
+		return "redirect:getBoardList.do?boardnum=" + num;
+	}
+	
+	// 프로필 사진 업로드
+	public String fileUpload(MultipartFile file, HttpSession session) throws Exception {
+
+
+	    String originalFilename = file.getOriginalFilename();
+	    UUID uuid = UUID.randomUUID();
+	    String uploadFileName = uuid.toString() + "_" + originalFilename;
+
+	    String basePath = "C:\\upload\\thumbnail";
+
+	    File dir = new File(basePath);
+	    if (!dir.exists()) {
+	        dir.mkdirs();
+	    }
+
+	    String uploadPath = basePath + "/"+ uploadFileName;
+
+	    File dest = new File(uploadPath);
+	    System.out.println(uploadPath);
+	    file.transferTo(dest);
+
+	    return uploadFileName;
+	}
 			
 	
 
@@ -322,7 +363,7 @@ public class BoardController {
 					result.get(i).setTags(tempList);
 					}
 					
-					if(result.get(i).getReviewPic() == null) {
+					if(result.get(i).getReviewPic() == null || num!=4) {
 						int code = result.get(i).getMoviecode();
 						System.out.println(code);
 						String contentType= result.get(i).getContentType();

@@ -5,18 +5,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>네이버 회원가입 폼 따기</title>
+<title>회원 가입</title>
  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src=<c:url value="http://code.jquery.com/jquery-3.1.1.js"/>></script>
+<script src="http://code.jquery.com/jquery-3.1.1.js"></script>
 <link href="<c:url value="/resources/new.css" />" rel="stylesheet">
 <link href ="<c:url value = "/resources/signUp.js" />">
 <script type="text/javascript" src="<c:url value = "/resources/signUp.js" />"></script>
+<style>
+
+#gender{
+	display: flex;
+    justify-content: space-evenly;
+}
+</style>
 </head>
 <body>
 <script type="text/javascript">
 
 </script>
+
 <form action="insertUser.do" class="validation-form" id="frm" method = "post">
 <div class="member">
        <!-- 1. 로고 -->
@@ -50,6 +58,19 @@
             <b>이름</b>
             <input type="text" id="name" name="name" >
         </div>
+        <div class="field">
+        
+            <b>성별</b>
+            <div id = "gender">
+            <input type="radio" id="gender" name="gender" value="M" ><label>남자</label>
+            <input type="radio" id="gender" name="gender" value="W" ><label>여자</label>
+            </div>
+            <div id = "age">
+            <b>생년월일</b>
+            <input type = "number" id = "birth" name = "birth" placeholder="'-'없이 8자를 입력해주세요">
+            </div>
+        </div>
+        
 
 		 <div class="field tel-number">
            <b>별명</b>

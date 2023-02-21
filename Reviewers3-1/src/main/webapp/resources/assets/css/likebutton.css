@@ -14,7 +14,7 @@
 }
 
 .heart.fill-color{
-	background: #ff2727;
+	background: coral;
 }
 
 .heart::before{
@@ -46,7 +46,7 @@
 	align-items: center;
 	width: 20px;
 	height: 20px;
-	background: #ff2727;
+	background: coral;
 	transform: rotate(-45deg);
 	border-radius: 0 0 0 5px;
 	cursor: pointer;

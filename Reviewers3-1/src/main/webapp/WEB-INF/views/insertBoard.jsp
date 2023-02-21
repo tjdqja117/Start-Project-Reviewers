@@ -28,8 +28,8 @@
 .container {
 	padding: 20px;
 	width: 900px;
-	height: 100%;
-	margin-top: 100px;
+ 	height: 80%; 
+ 	margin-top: 40px; 
 	background-color: white;
 	border-radius: 12px;
 	font-family: 'Jua', sans-serif;
@@ -104,6 +104,12 @@
 .tagify {
 	width: 100%;
 }
+
+#overview-cancel{
+	visibility: hidden;
+}
+
+
 </style>
 
 </head>
@@ -170,6 +176,59 @@
 
 	});
 </script>
+
+<script type="text/javascript">
+    //이미지 미리보기
+    var sel_file;
+ 
+    $(document).ready(function() {
+        $("#uploadFile").on("change", handleImgFileSelect);
+        $("#overview-cancel").on("click", MiRiBoGiCanCel);
+    });
+
+    function MiRiBoGiCanCel() {
+        $("#miribogiimg").attr("src", "");
+        $("#uploadFile").val("");
+    }
+    
+    
+    function handleImgFileSelect(e) {
+    	var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+        
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+ 
+        filesArr.forEach(function(f) {
+            if (!f.type.match(reg)) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+ 
+            sel_file = f;
+ 
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#miribogiimg").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+        
+        // 파일을 업로드 해야만 변경 버튼이 노출
+        var originalImage = $("#miribogiimg").attr("src");
+
+        $("#uploadFile").change(function() {
+        	$("#overview-cancel").css("visibility", "visible");
+            $("#overview-cancel").on("click", function() {
+                $("#uploadFile").val("");
+                $("#miribogiimg").attr("src", originalImage);
+                $("#overview-cancle").hide();
+            });
+        });
+    }   
+</script>
+
+
+
 <body>
 
 
@@ -215,26 +274,38 @@
 	<!-- 글 작성 폼 -->
 	<div class="container">
 		<div class="title">글쓰기</div>
-	<form action="insertBoard.do?boardnum=4" method="post">
+	<form action="insertBoard.do" method="post" enctype="multipart/form-data">
 		
 	<input type = "hidden" id = "nickname" name="nickname" value = "${UserInfo.nickname }">
  	<input type="hidden" id = "userId" name="userId" value = "${User.userId }">
 			
 			<div class="form-title">
 				<div>제목</div>
-				<input name="title" type="text" placeholder="제목을 입력해주세요.">
+				<input name="title" type="text" placeholder="제목을 입력해주세요." required>
 			</div>
-			<div class="search-bar">
-				<div>리뷰할 콘텐츠</div>
-				<input type="hidden" id="moviecode" name="moviecode" value="0">
-				     <input type="search" id="autocomplete" name="searchKeyword" aria-label="Search">
-				<select id="Search" name="SC">
-					<option value="none" selected>--선택--</option>
-					<option value="movie">영화 리뷰</option>
-					<option value="tv">TV 프로그램 리뷰</option>
-					<option value="webtoon">웹툰 리뷰</option>
-					<option value="community">자유게시판 글작성</option>
-				</select>
+			
+			<div style="justify-content: space-between; display: flex;">
+				<div>
+					<input type = "file" name = "uploadFile" id = "uploadFile"><br>
+					<img id="miribogiimg" style="height: 100px; width: auto;" >
+					<button class="miribogi" type="button" id="overview-cancel">취소하기</button>
+					<button  type="button" id="overview-cancel">취소하기</button>
+				</div>
+			<div>
+				<div class="search-bar">
+					<div>리뷰할 콘텐츠</div>
+					<input type="hidden" id="moviecode" name="moviecode" value="0">
+					     <input type="search" id="autocomplete" name="searchKeyword" aria-label="Search">
+					<select id="Search" name="SC">
+						<option value="none" selected>--선택--</option>
+						<option value="movie">영화 리뷰</option>
+						<option value="tv">TV 프로그램 리뷰</option>
+						<option value="webtoon">웹툰 리뷰</option>
+						<option value="community">자유게시판 글작성</option>
+					</select>
+				</div>
+			</div>
+			
 			</div>
 			<div class="form-hashtag">
 				<div>#태그</div>
@@ -242,7 +313,7 @@
 			</div>
 			<div class="form-content">
 				<div>내용</div>
-				<textarea id="content" name="content"></textarea>
+				<textarea id="content" name="content" required></textarea>
 			</div>
 			<div class="form-btn-wrap">
 				<input type = "button" onclick='history.back(-1);' value = "취소" class="form-cancel-btn">

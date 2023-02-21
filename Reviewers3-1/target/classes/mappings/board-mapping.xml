@@ -23,7 +23,7 @@
 
 	<insert id="insertBoard">
 		 <![CDATA[INSERT INTO  reviewboard(bseq, boardnum, title, nickname,  content, filename, like_num, unlike_num, cnt, UserId,writedate, moviecode, contenttype)
-		VALUES (#{bseq}, #{boardnum}, #{title},#{nickname}, #{content},null
+		VALUES (#{bseq}, #{boardnum}, #{title},#{nickname}, #{content},#{filename}
 		, 0, 0, 0, #{userId},sysdate, #{moviecode}, #{contentType}) ]]>	
 	</insert>
 	

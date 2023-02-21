@@ -50,18 +50,20 @@ section.notice {
 }
 
 .board-table {
-  font-size: 13px;
+  font-size: 15px;
   width: 100%;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 }
 
 .board-table a {
-  color: #333;
+  color: black !important;
   display: inline-block;
   line-height: 1.4;
   word-break: break-all;
   vertical-align: middle;
+  font-weight: bold;
+  
 }
 .board-table a:hover {
   text-decoration: underline;
@@ -71,6 +73,11 @@ section.notice {
 }
 
 .board-table .th-num {
+  width: 100px;
+  text-align: center;
+}
+
+.board-table .th-title {
   width: 100px;
   text-align: center;
 }

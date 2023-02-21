@@ -7,8 +7,22 @@ public class UserVO {
 	private String email;
 	private String name;
 	private String role;
+	private int birth;
+	private String gender;
 	public String getUserId() {
 		return UserId;
+	}
+	public int getBirth() {
+		return birth;
+	}
+	public void setBirth(int birth) {
+		this.birth = birth;
+	}
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 	public void setUserId(String userId) {
 		UserId = userId;
